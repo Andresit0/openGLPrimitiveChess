@@ -28,6 +28,61 @@ GLfloat btnX =0.0;
 GLfloat btnY =8.0;
 GLfloat btnZ =15.0;
 GLfloat theta = 0;
+GLfloat transQueenX=0.0;
+int reflectionBishop=1;
+GLfloat scalingX=0.7;
+GLfloat scalingY=0.7;
+GLfloat scalingZ=0.7;
+
+void scalingXYZ()
+{
+  float m[]={
+     scalingX,   0.0,   0.0,   0.0,
+     0.0,   scalingY,   0.0,   0.0,
+     0.0,   0.0,   scalingZ,   0.0,
+     0.0,   0.0,   0.0,   1.0};
+ glMultMatrixf(m);
+}
+
+void scale(float sx, float sy, float sz)
+{
+  float m[]={
+     sx,   0.0,   0.0,   0.0,
+     0.0,   sy,   0.0,   0.0,
+     0.0,   0.0,   sz,   0.0,
+     0.0,   0.0,   0.0,   1.0};
+ glMultMatrixf(m);
+}
+
+void reflectionXY()
+{
+  float m[]={
+     1.0,   0.0,   0.0,   0.0,
+     0.0,   reflectionBishop,   0.0,   0.0,
+     0.0,   0.0,   1.0,   0.0,
+     0.0,   0.0,   0.0,   1.0};
+ glMultMatrixf(m);
+}
+
+void matrixTranslationQueenX()
+{
+  float m[]={
+     1.0,   0.0,   0.0,   0.0,
+     0.0,   1.0,   0.0,   0.0,
+     0.0,   0.0,   1.0,   0.0,
+     transQueenX,   0.0,   0.0,   1.0};
+ glMultMatrixf(m);
+}
+
+void matrixTranslation(float tx,float ty,float tz)
+{
+  float m[]={
+     1.0,   0.0,   0.0,   0.0,
+     0.0,   1.0,   0.0,   0.0,
+     0.0,   0.0,   1.0,   0.0,
+     tx,   ty,   tz,   1.0};
+ glMultMatrixf(m);
+}
 
 void matrixRotationY()
 {
@@ -139,7 +194,8 @@ float k=0;
 float max = 360.0;
 while(k<=max){
 
-    glRotatef(newAngle += k, 0.0f, 1.0f, 0.0f);
+    matrixRotationY();
+    theta=theta+0.001; 
     glColor3f(0.0,0.0,1.0);
     glBegin(GL_QUADS);
         glVertex3f(0.0f, 0.0f, 1.5f);      
@@ -316,12 +372,10 @@ for(int i=0;i<=120;i++){
     glVertex3f(2.82f+translateHeadW,3.7f+translateHeadH,1.0f+translateHeadZ);
     glVertex3f(3.04f+translateHeadW,2.9f+translateHeadH,1.0f+translateHeadZ);
 
-    //glVertex3f(2.95f,3.9f,1.0f);
-    //glVertex3f(3.18f,2.9f,1.0f);
     glVertex3f(3.08f+translateHeadW,3.9f,1.0f);
     glVertex3f(3.28f+translateHeadW,2.9f,1.0f);
     glEnd();
-    glTranslatef(0.0f,0.0f,translate);
+    matrixTranslation(0.0f,0.0f,translate);
 }    
 glEndList();
 
@@ -388,15 +442,15 @@ while(iK<=max){
     iK++;
     theta=theta+0.001;  
 }
-    glTranslatef(0.0f,5.0f,0.0);
+    matrixTranslation(0.0f,5.0f,0.0);
     glCallList(CIRCLE);
 glEndList();
 
 glPopMatrix();
 
 //KING
-#define KING 5
-glNewList(KING,GL_COMPILE);
+#define QUEEN 5
+glNewList(QUEEN,GL_COMPILE);
 glCallList(BASE);
 float hKing =1.1;
 float iKing =1.1;
@@ -443,21 +497,24 @@ while(iKng<=max){
     iKng++;
     theta=theta+0.001;  
 }
-    glScalef(0.5,0.5,0.5);
-    glTranslatef(0.0f,12.0,0.0);
+    scale(0.5,0.5,0.5);
+    matrixTranslation(0.0f,12.0,0.0);
     glCallList(CIRCLE);
 glEndList();
 
-        
-glTranslatef(6.0f,0.0,0.0);        
+glPopMatrix();        
+matrixTranslation(6.0f,0.0,0.0);  
+reflectionXY();      
 glCallList(BISHOP);
+
 glPopMatrix();  
-glCallList(KING);
+matrixTranslationQueenX();
+glCallList(QUEEN);
 
 glPopMatrix();
-    glScalef(0.7,0.7,0.7);
-    glTranslatef(-8.0f,0.0f,0.0);
-    glCallList(KNIGHT);
+matrixTranslation(-8.0f,0.0f,0.0);
+scalingXYZ();
+glCallList(KNIGHT);
 
 
 
@@ -524,7 +581,17 @@ void mykey(unsigned char key, int x, int y)
     case 27: // Escape key
       exit (0);
   }
-	if(key == 'Q' | key == 'q') exit(0);
+	if(key == 'Q'){
+        transQueenX=transQueenX+0.1;
+    };
+
+    if(key == 'q'){
+        transQueenX=transQueenX-0.1;
+    };
+
+    if(key == 'B' | key == 'b'){
+        reflectionBishop=reflectionBishop*(-1);
+    };
 
     if(key == 'W' | key == 'w'){
         btnY=btnY-1.0f;
@@ -550,10 +617,18 @@ void mykey(unsigned char key, int x, int y)
         btnZ=btnZ+1.0f;
     };  
 
-    if(key == 's' | key == 'S'){
-        theta=theta+0.1;
+    if(key == 's' ){
+        scalingX=scalingX-0.1;
+        scalingY=scalingY-0.1;
+        scalingZ=scalingZ-0.1;
         
-    };  
+    };
+    if(key == 'S'){
+        scalingX=scalingX+0.1;
+        scalingY=scalingY+0.1;
+        scalingZ=scalingZ+0.1;
+        
+    };   
 
     if(key == 'd' | key == 'D'){
         theta=theta-0.1;
