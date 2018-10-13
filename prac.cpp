@@ -29,6 +29,16 @@ GLfloat btnY =8.0;
 GLfloat btnZ =15.0;
 GLfloat theta = 0;
 
+void matrixRotationY()
+{
+  float m[]={
+     cos(theta),   0.0,   sin(theta),   0.0,
+     0.0,   1.0,  0.0,   0.0,
+     -sin(theta),   0.0,   cos(theta),   0.0,
+     0.0,   0.0,   0.0,   1.0};
+ glMultMatrixf(m);
+}
+
 void matrixRotation()
 {
   float m[]={
@@ -65,10 +75,10 @@ void initGL()
 }
 
  
-void draw(float radio, int nlatitud , int nlongitud) // TODO: Create a draw sphere function
+void draw() // TODO: Create a draw sphere function
 {
 
-glPushMatrix();
+
 
 for(int j=0;j<=100;j=j+2){
     for(int i=0;i<=100;i++){
@@ -112,8 +122,8 @@ for(int j=0;j<=100;j++){
 }
 
 
-//matrixRotation();
-
+#define BASE 1
+glNewList(BASE,GL_COMPILE);
 int newAngle=0;
 float k=0;
 float max = 360.0;
@@ -185,11 +195,24 @@ while(k<=max){
 
     k=k+0.01;
 }
+glEndList();
 
-    glPopMatrix();
+//BISHOP
+#define BISHOP 2
 
+glNewList(BISHOP,GL_COMPILE);
+float translate=0.01;
+float angleBishop =0;
+for(int i=0;i<=120;i++){ 
     glBegin(GL_POLYGON);
-    glVertex3f(2.0f,0.0f,1.0f);    // Color Yellow
+    glVertex3f(3.26f,2.145f,1.0f);
+    glVertex3f(4.4f,1.7f,1.0f);
+    glVertex3f(4.9f,2.2f,1.0f);
+    glVertex3f(3.4f,3.5f,1.0f);
+    glVertex3f(2.4f,3.6f,1.0f);
+    glEnd();
+    glBegin(GL_POLYGON);
+    glVertex3f(2.0f,0.0f,1.0f);    
     glVertex3f(4.2f,0.0f,1.0f);
     glVertex3f(4.2f,0.3f,1.0f);
     glVertex3f(3.2f,2.0f,1.0f);
@@ -212,15 +235,85 @@ while(k<=max){
     glVertex3f(1.85f,3.20f,1.0f);
     glVertex3f(1.80f,3.15f,1.0f);
     glVertex3f(1.75f,3.10f,1.0f);
-    glEnd();
-    glBegin(GL_POLYGON);
-    glVertex3f(3.26f,2.145f,1.0f);
-    glVertex3f(4.4f,1.7f,1.0f);
-    glVertex3f(4.9f,2.2f,1.0f);
-    glVertex3f(3.4f,3.5f,1.0f);
-    glVertex3f(2.4f,3.6f,1.0f);
-    glEnd();
+    glVertex3f(1.70f,3.05f,1.0f);
+    glVertex3f(1.65f,3.00f,1.0f);
+    glVertex3f(1.60f,2.95f,1.0f);
+    glVertex3f(1.55f,2.90f,1.0f);
+    glVertex3f(1.85f,0.5f,1.0f); 
 
+    glVertex3f(1.40f,1.2f,1.0f);
+    glVertex3f(1.85f,0.5f,1.0f);
+
+    glVertex3f(1.38f,1.6f,1.0f);
+    glVertex3f(1.80f,0.9f,1.0f); 
+
+    glVertex3f(1.34f,2.0f,1.0f);
+    glVertex3f(1.75f,1.4f,1.0f);
+
+    glVertex3f(1.30f,2.4f,1.0f);
+    glVertex3f(1.70f,1.8f,1.0f); 
+
+    glVertex3f(1.26f,2.8f,1.0f);
+    glVertex3f(1.65f,2.3f,1.0f); 
+
+    glVertex3f(1.30f,3.2f,1.0f);
+    glVertex3f(1.60f,2.3f,1.0f); 
+
+    glVertex3f(1.34f,3.4f,1.0f);
+    glVertex3f(1.64f,2.7f,1.0f);
+
+    glVertex3f(1.45f,3.5f,1.0f);
+    glVertex3f(1.74f,2.9f,1.0f); 
+
+    glVertex3f(1.62f,3.6f,1.0f);
+    glVertex3f(1.86f,2.9f,1.0f); 
+
+    glVertex3f(1.74f,3.6f,1.0f);
+    glVertex3f(1.98f,2.9f,1.0f); 
+
+    glVertex3f(1.86f,3.7f,1.0f);
+    glVertex3f(2.11f,2.9f,1.0f); 
+
+    glVertex3f(2.00f,3.7f,1.0f);
+    glVertex3f(2.19f,2.9f,1.0f);
+
+    glVertex3f(2.10f,3.8f,1.0f);
+    glVertex3f(2.32f,2.9f,1.0f);
+
+    glVertex3f(2.22f,3.8f,1.0f);
+    glVertex3f(2.44f,2.9f,1.0f);
+
+    glVertex3f(2.32f,3.8f,1.0f);
+    glVertex3f(2.54f,2.9f,1.0f);
+
+    glVertex3f(2.42f,3.8f,1.0f);
+    glVertex3f(2.64f,2.9f,1.0f);
+
+    glVertex3f(2.52f,3.8f,1.0f);
+    glVertex3f(2.74f,2.9f,1.0f);
+
+    glVertex3f(2.62f,3.8f,1.0f);
+    glVertex3f(2.84f,2.9f,1.0f);
+
+    glVertex3f(2.72f,3.8f,1.0f);
+    glVertex3f(2.94f,2.9f,1.0f);
+
+    glVertex3f(2.82f,3.7f,1.0f);
+    glVertex3f(3.04f,2.9f,1.0f);
+
+    //glVertex3f(2.95f,3.9f,1.0f);
+    //glVertex3f(3.18f,2.9f,1.0f);
+    glVertex3f(3.08f,3.9f,1.0f);
+    glVertex3f(3.28f,2.9f,1.0f);
+    glEnd();
+    glTranslatef(0.0f,0.0f,translate);
+}    
+glEndList();
+
+glScalef(1.22f,1.22f,1.22f);
+glCallList(BASE);
+glTranslatef(-3.5f,1.1f,-1.0f);     
+glCallList(BISHOP);
      
 } 
 /* Callback handler for window re-paint event */
@@ -235,7 +328,7 @@ void display()
     
    //glColor3f(0.0f, 0.0f, 1.0f);  // TODO: Set the color of the object
    /* Draw a sphere */
-   draw(50.0,200,100);        // TODO: Draw a Sphere, test using different primitives polygon/square/triangle/line STRIP/ what is the difference?, what does it happen with filled color?
+   draw();        // TODO: Draw a Sphere, test using different primitives polygon/square/triangle/line STRIP/ what is the difference?, what does it happen with filled color?
    
    glFlush ();                   //TODO: Render Object
 }
@@ -324,7 +417,7 @@ void mykey(unsigned char key, int x, int y)
 int main(int argc, char** argv) {
    glutInit(&argc, argv);            // Initialize GLUT
    glutInitWindowSize(windowWidth, windowHeight);  // Initial window width and height
-   glutCreateWindow("Prac 3B");      // Create window with given title
+   glutCreateWindow("CHESS");      // Create window with given title
    glutDisplayFunc(display);     // Register callback handler for window re-paint
    glutReshapeFunc(reshape);     // Register callback handler for window re-shape
    glutKeyboardFunc(mykey);   		/* TODO keyboard callback invoked when mouse is used */
