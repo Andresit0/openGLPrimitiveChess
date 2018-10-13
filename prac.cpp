@@ -126,6 +126,11 @@ glPushMatrix();
 glPushMatrix();
 glPushMatrix();
 glPushMatrix();
+glPushMatrix();
+glPushMatrix();
+glPushMatrix();
+glPushMatrix();
+glPushMatrix();
 
 #define BASE 1
 glNewList(BASE,GL_COMPILE);
@@ -205,8 +210,9 @@ glEndList();
 glPopMatrix();
 
 //BISHOP
-#define BISHOPHEAD 2
-glNewList(BISHOPHEAD,GL_COMPILE);
+#define BISHOP 2
+glNewList(BISHOP,GL_COMPILE);
+glColor3f(0.0f,0.0f,1.0f); 
 float translate=0.01;
 float angleBishop =0;
 float translateHeadW=-3.6;
@@ -321,33 +327,10 @@ glEndList();
 
 glPopMatrix();
 
-//KNIGHT
-#define KNIGHT 4
-glNewList(KNIGHT,GL_COMPILE);
-glCallList(BASE);
-float hKnight=1.1;
-float iKnight=1.1;
-int iK=0;
-glColor3f(0.0f,0.0f,1.0f); 
-while(iK<=max){
-    matrixRotationY();
-    glBegin(GL_QUADS);
-        glVertex3f(0.0f, hKnight+2.8, 0.0f);      
-        glVertex3f(0.7, hKnight+2.8, 0.0f); 
-        glVertex3f(0.7, hKnight, 1.0f);      
-        glVertex3f(0.0f, hKnight, 1.0f);   
-    glEnd();
-    glBegin(GL_QUADS);
-        glVertex3f(0.0f, hKnight+2.8, 0.0f);      
-        glVertex3f(0.7, hKnight+2.8, 0.0f); 
-        glVertex3f(0.7, hKnight+0.3+2.8, 1.0f);      
-        glVertex3f(0.0f, hKnight+0.3+2.8, 1.0f);   
-    glEnd();
-    iK++;
-    theta=theta+0.001;
-}
-
-glTranslatef(0.0f,5.0f,0.0);
+//Circle
+#define CIRCLE 3
+glNewList(CIRCLE,GL_COMPILE);
+    glColor3f(0.0f,0.0f,1.0f); 
      int nlatitud=200;
      int nlongitud=200;
      int radio=1;
@@ -378,17 +361,100 @@ glTranslatef(0.0f,5.0f,0.0);
           glVertex3fv( vertice );
      }
      glEnd();
-     glEndList();
+glEndList();
 
-
-
-    glPopMatrix();
+//KNIGHT
+#define KNIGHT 4
+glNewList(KNIGHT,GL_COMPILE);
+glCallList(BASE);
+float hKnight=1.1;
+float iKnight=1.1;
+int iK=0;
+glColor3f(0.0f,0.0f,1.0f); 
+while(iK<=max){
     matrixRotationY();
-    glScalef(1.5,1.5,1.5);
-    glCallList(BISHOPHEAD);
+    glBegin(GL_QUADS);
+        glVertex3f(0.0f, hKnight+2.8, 0.0f);      
+        glVertex3f(0.7, hKnight+2.8, 0.0f); 
+        glVertex3f(0.7, hKnight, 1.0f);      
+        glVertex3f(0.0f, hKnight, 1.0f);   
+    glEnd();
+    glBegin(GL_QUADS);
+        glVertex3f(0.0f, hKnight+2.8, 0.0f);      
+        glVertex3f(0.7, hKnight+2.8, 0.0f); 
+        glVertex3f(0.7, hKnight+0.3+2.8, 1.0f);      
+        glVertex3f(0.0f, hKnight+0.3+2.8, 1.0f);   
+    glEnd();
+    iK++;
+    theta=theta+0.001;  
+}
+    glTranslatef(0.0f,5.0f,0.0);
+    glCallList(CIRCLE);
+glEndList();
 
-    glPopMatrix();
+glPopMatrix();
+
+//KING
+#define KING 5
+glNewList(KING,GL_COMPILE);
+glCallList(BASE);
+float hKing =1.1;
+float iKing =1.1;
+int iKng =0;
+glColor3f(0.0f,0.0f,1.0f); 
+while(iKng<=max){
     matrixRotationY();
+    glBegin(GL_QUADS);
+        glVertex3f(0.0f, hKing +2.8, 0.0f);      
+        glVertex3f(0.7, hKing +2.8, 0.0f); 
+        glVertex3f(0.7, hKing, 1.0f);      
+        glVertex3f(0.0f, hKing, 1.0f);   
+    glEnd();
+    glBegin(GL_QUADS);
+        glVertex3f(0.0f, hKing +2.8, 0.0f);      
+        glVertex3f(0.7, hKing +2.8, 0.0f); 
+        glVertex3f(0.7, hKing +0.3+2.8, 1.0f);      
+        glVertex3f(0.0f, hKing +0.3+2.8, 1.0f);   
+    glEnd();
+    glBegin(GL_QUADS);
+        glVertex3f(0.0f, hKing +2.8+0.3*2, 0.0f);      
+        glVertex3f(0.7, hKing +2.8+0.3*2, 0.0f); 
+        glVertex3f(0.7, hKing, 1.0f);      
+        glVertex3f(0.0f, hKing, 1.0f);   
+    glEnd();
+    glBegin(GL_QUADS);
+        glVertex3f(0.0f, hKing +0.3+2.8, 0.0f);      
+        glVertex3f(0.7, hKing +0.3+2.8, 0.0f); 
+        glVertex3f(0.7, hKing +0.3+3.1, 1.0f);      
+        glVertex3f(0.0f, hKing +0.3+3.1, 1.0f);   
+    glEnd();
+    glBegin(GL_QUADS);
+        glVertex3f(0.0f, hKing +2.8+0.3*5, 0.0f);      
+        glVertex3f(0.7, hKing +2.8+0.3*5, 0.0f); 
+        glVertex3f(0.7, hKing, 1.0f);      
+        glVertex3f(0.0f, hKing, 1.0f);   
+    glEnd();
+    glBegin(GL_QUADS);
+        glVertex3f(0.0f, hKing +2.8+0.3*5, 0.0f);      
+        glVertex3f(0.7, hKing +2.8+0.3*5, 0.0f); 
+        glVertex3f(0.7, hKing +2.8+0.3*5+0.3, 1.0f);      
+        glVertex3f(0.0f, hKing +2.8+0.3*5+0.3, 1.0f);   
+    glEnd();    
+    iKng++;
+    theta=theta+0.001;  
+}
+    glScalef(0.5,0.5,0.5);
+    glTranslatef(0.0f,12.0,0.0);
+    glCallList(CIRCLE);
+glEndList();
+
+        
+glTranslatef(6.0f,0.0,0.0);        
+glCallList(BISHOP);
+glPopMatrix();  
+glCallList(KING);
+
+glPopMatrix();
     glScalef(0.7,0.7,0.7);
     glTranslatef(-8.0f,0.0f,0.0);
     glCallList(KNIGHT);
