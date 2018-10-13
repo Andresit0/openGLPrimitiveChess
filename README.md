@@ -1,15 +1,15 @@
 # openGLPrimitiveChess
 
-work in prac.ccp
+Open prac.ccp
 
-Reflection      -->      BISHOP(Caballo) 
+Reflection        -->      BISHOP(Caballo) 
 
-Rotation        -->      KING (Rey)
+Rotation          -->      KING (Rey)
 
-Scaling         -->      KNIGHT (Peón)
+Scaling           -->      KNIGHT (Peón)
 
-Shear           -->      PAWN  (Alfil) 
+Shear             -->      PAWN  (Alfil) 
 
-Translation     -->      QUEEN (Reina)
+Translation in X  -->      QUEEN (Reina)
 
-                -->      ROOK (Torre)
+Translation in Z  -->      ROOK (Torre)

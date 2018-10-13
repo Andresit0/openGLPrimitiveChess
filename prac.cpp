@@ -589,6 +589,8 @@ void mykey(unsigned char key, int x, int y)
         transQueenX=transQueenX-0.1;
     };
 
+
+
     if(key == 'B' | key == 'b'){
         reflectionBishop=reflectionBishop*(-1);
     };
@@ -616,6 +618,9 @@ void mykey(unsigned char key, int x, int y)
     if(key == 'k' | key == 'k'){
         btnZ=btnZ+1.0f;
     };  
+
+
+
 
     if(key == 's' ){
         scalingX=scalingX-0.1;
