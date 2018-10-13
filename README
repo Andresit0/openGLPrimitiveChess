@@ -1,0 +1,5 @@
+Crear ejecutble con:    
+    make
+
+Limipiar
+    make clean 

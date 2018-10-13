@@ -1,0 +1,8 @@
+{
+    "files.associations": {
+        "array": "cpp",
+        "cmath": "cpp",
+        "limits": "cpp"
+    },
+    "git.ignoreLimitWarning": true
+}
