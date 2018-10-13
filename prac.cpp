@@ -39,7 +39,7 @@ void matrixRotationY()
  glMultMatrixf(m);
 }
 
-void matrixRotation()
+void matrixRotationZ()
 {
   float m[]={
      cos(theta),   sin(theta),   0.0,   0.0,
@@ -49,7 +49,7 @@ void matrixRotation()
  glMultMatrixf(m);
 }
 
-void matrixRotation2()
+void matrixRotationX()
 {
   float m[]={
      1.0,   0.0,   0.0,   0.0,
@@ -121,6 +121,11 @@ for(int j=0;j<=100;j++){
     }
 }
 
+glPushMatrix();
+glPushMatrix();
+glPushMatrix();
+glPushMatrix();
+glPushMatrix();
 
 #define BASE 1
 glNewList(BASE,GL_COMPILE);
@@ -197,124 +202,202 @@ while(k<=max){
 }
 glEndList();
 
-//BISHOP
-#define BISHOP 2
+glPopMatrix();
 
-glNewList(BISHOP,GL_COMPILE);
+//BISHOP
+#define BISHOPHEAD 2
+glNewList(BISHOPHEAD,GL_COMPILE);
 float translate=0.01;
 float angleBishop =0;
-for(int i=0;i<=120;i++){ 
+float translateHeadW=-3.6;
+float translateHeadH=0.0;
+float translateHeadZ=-1.0;
+for(int i=0;i<=120;i++){
     glBegin(GL_POLYGON);
-    glVertex3f(3.26f,2.145f,1.0f);
-    glVertex3f(4.4f,1.7f,1.0f);
-    glVertex3f(4.9f,2.2f,1.0f);
-    glVertex3f(3.4f,3.5f,1.0f);
-    glVertex3f(2.4f,3.6f,1.0f);
+    glVertex3f(3.26f+translateHeadW,2.145f+translateHeadH,1.0f+translateHeadZ);
+    glVertex3f(4.4f+translateHeadW,1.7f+translateHeadH,1.0f+translateHeadZ);
+    glVertex3f(4.9f+translateHeadW,2.2f+translateHeadH,1.0f+translateHeadZ);
+    glVertex3f(3.4f+translateHeadW,3.5f+translateHeadH,1.0f+translateHeadZ);
+    glVertex3f(2.4f+translateHeadW,3.6f+translateHeadH,1.0f+translateHeadZ);
     glEnd();
     glBegin(GL_POLYGON);
-    glVertex3f(2.0f,0.0f,1.0f);    
-    glVertex3f(4.2f,0.0f,1.0f);
-    glVertex3f(4.2f,0.3f,1.0f);
-    glVertex3f(3.2f,2.0f,1.0f);
-    glVertex3f(3.20f,2.125f,1.0f);
-    glVertex3f(3.22f,2.127f,1.0f);
-    glVertex3f(3.23f,2.129f,1.0f);
-    glVertex3f(3.24f,2.134f,1.0f);
-    glVertex3f(3.25f,2.139f,1.0f);
-    glVertex3f(3.26f,2.145f,1.0f);
-    glVertex3f(2.4f,3.6f,1.0f);
-    glVertex3f(2.3f,3.57f,1.0f);
-    glVertex3f(2.2f,3.54f,1.0f);
-    glVertex3f(2.1f,3.51f,1.0f);
-    glVertex3f(2.15f,3.48f,1.0f);
-    glVertex3f(2.10f,3.45f,1.0f);
-    glVertex3f(2.05f,3.42f,1.0f);
-    glVertex3f(2.00f,3.39f,1.0f);
-    glVertex3f(1.95f,3.30f,1.0f);
-    glVertex3f(1.90f,3.25f,1.0f);
-    glVertex3f(1.85f,3.20f,1.0f);
-    glVertex3f(1.80f,3.15f,1.0f);
-    glVertex3f(1.75f,3.10f,1.0f);
-    glVertex3f(1.70f,3.05f,1.0f);
-    glVertex3f(1.65f,3.00f,1.0f);
-    glVertex3f(1.60f,2.95f,1.0f);
-    glVertex3f(1.55f,2.90f,1.0f);
-    glVertex3f(1.85f,0.5f,1.0f); 
+    glVertex3f(2.0f+translateHeadW,0.0f+translateHeadH,1.0f+translateHeadZ);    
+    glVertex3f(4.2f+translateHeadW,0.0f+translateHeadH,1.0f+translateHeadZ);
+    glVertex3f(4.2f+translateHeadW,0.3f+translateHeadH,1.0f+translateHeadZ);
+    glVertex3f(3.2f+translateHeadW,2.0f+translateHeadH,1.0f+translateHeadZ);
+    glVertex3f(3.20f+translateHeadW,2.125f+translateHeadH,1.0f+translateHeadZ);
+    glVertex3f(3.22f+translateHeadW,2.127f+translateHeadH,1.0f+translateHeadZ);
+    glVertex3f(3.23f+translateHeadW,2.129f+translateHeadH,1.0f+translateHeadZ);
+    glVertex3f(3.24f+translateHeadW,2.134f+translateHeadH,1.0f+translateHeadZ);
+    glVertex3f(3.25f+translateHeadW,2.139f+translateHeadH,1.0f+translateHeadZ);
+    glVertex3f(3.26f+translateHeadW,2.145f+translateHeadH,1.0f+translateHeadZ);
+    glVertex3f(2.4f+translateHeadW,3.6f+translateHeadH,1.0f+translateHeadZ);
+    glVertex3f(2.3f+translateHeadW,3.57f+translateHeadH,1.0f+translateHeadZ);
+    glVertex3f(2.2f+translateHeadW,3.54f+translateHeadH,1.0f+translateHeadZ);
+    glVertex3f(2.1f+translateHeadW,3.51f+translateHeadH,1.0f+translateHeadZ);
+    glVertex3f(2.15f+translateHeadW,3.48f+translateHeadH,1.0f+translateHeadZ);
+    glVertex3f(2.10f+translateHeadW,3.45f+translateHeadH,1.0f+translateHeadZ);
+    glVertex3f(2.05f+translateHeadW,3.42f+translateHeadH,1.0f+translateHeadZ);
+    glVertex3f(2.00f+translateHeadW,3.39f+translateHeadH,1.0f+translateHeadZ);
+    glVertex3f(1.95f+translateHeadW,3.30f+translateHeadH,1.0f+translateHeadZ);
+    glVertex3f(1.90f+translateHeadW,3.25f+translateHeadH,1.0f+translateHeadZ);
+    glVertex3f(1.85f+translateHeadW,3.20f+translateHeadH,1.0f+translateHeadZ);
+    glVertex3f(1.80f+translateHeadW,3.15f+translateHeadH,1.0f+translateHeadZ);
+    glVertex3f(1.75f+translateHeadW,3.10f+translateHeadH,1.0f+translateHeadZ);
+    glVertex3f(1.70f+translateHeadW,3.05f+translateHeadH,1.0f+translateHeadZ);
+    glVertex3f(1.65f+translateHeadW,3.00f+translateHeadH,1.0f+translateHeadZ);
+    glVertex3f(1.60f+translateHeadW,2.95f+translateHeadH,1.0f+translateHeadZ);
+    glVertex3f(1.55f+translateHeadW,2.90f+translateHeadH,1.0f+translateHeadZ);
+    glVertex3f(1.85f+translateHeadW,0.5f+translateHeadH,1.0f+translateHeadZ); 
 
-    glVertex3f(1.40f,1.2f,1.0f);
-    glVertex3f(1.85f,0.5f,1.0f);
+    glVertex3f(1.40f+translateHeadW,1.2f+translateHeadH,1.0f+translateHeadZ);
+    glVertex3f(1.85f+translateHeadW,0.5f+translateHeadH,1.0f+translateHeadZ);
 
-    glVertex3f(1.38f,1.6f,1.0f);
-    glVertex3f(1.80f,0.9f,1.0f); 
+    glVertex3f(1.38f+translateHeadW,1.6f+translateHeadH,1.0f+translateHeadZ);
+    glVertex3f(1.80f+translateHeadW,0.9f+translateHeadH,1.0f+translateHeadZ); 
 
-    glVertex3f(1.34f,2.0f,1.0f);
-    glVertex3f(1.75f,1.4f,1.0f);
+    glVertex3f(1.34f+translateHeadW,2.0f+translateHeadH,1.0f+translateHeadZ);
+    glVertex3f(1.75f+translateHeadW,1.4f+translateHeadH,1.0f+translateHeadZ);
 
-    glVertex3f(1.30f,2.4f,1.0f);
-    glVertex3f(1.70f,1.8f,1.0f); 
+    glVertex3f(1.30f+translateHeadW,2.4f+translateHeadH,1.0f+translateHeadZ);
+    glVertex3f(1.70f+translateHeadW,1.8f+translateHeadH,1.0f+translateHeadZ); 
 
-    glVertex3f(1.26f,2.8f,1.0f);
-    glVertex3f(1.65f,2.3f,1.0f); 
+    glVertex3f(1.26f+translateHeadW,2.8f+translateHeadH,1.0f+translateHeadZ);
+    glVertex3f(1.65f+translateHeadW,2.3f+translateHeadH,1.0f+translateHeadZ); 
 
-    glVertex3f(1.30f,3.2f,1.0f);
-    glVertex3f(1.60f,2.3f,1.0f); 
+    glVertex3f(1.30f+translateHeadW,3.2f+translateHeadH,1.0f+translateHeadZ);
+    glVertex3f(1.60f+translateHeadW,2.3f+translateHeadH,1.0f+translateHeadZ); 
 
-    glVertex3f(1.34f,3.4f,1.0f);
-    glVertex3f(1.64f,2.7f,1.0f);
+    glVertex3f(1.34f+translateHeadW,3.4f+translateHeadH,1.0f+translateHeadZ);
+    glVertex3f(1.64f+translateHeadW,2.7f+translateHeadH,1.0f+translateHeadZ);
 
-    glVertex3f(1.45f,3.5f,1.0f);
-    glVertex3f(1.74f,2.9f,1.0f); 
+    glVertex3f(1.45f+translateHeadW,3.5f+translateHeadH,1.0f+translateHeadZ);
+    glVertex3f(1.74f+translateHeadW,2.9f+translateHeadH,1.0f+translateHeadZ); 
 
-    glVertex3f(1.62f,3.6f,1.0f);
-    glVertex3f(1.86f,2.9f,1.0f); 
+    glVertex3f(1.62f+translateHeadW,3.6f+translateHeadH,1.0f+translateHeadZ);
+    glVertex3f(1.86f+translateHeadW,2.9f+translateHeadH,1.0f+translateHeadZ); 
 
-    glVertex3f(1.74f,3.6f,1.0f);
-    glVertex3f(1.98f,2.9f,1.0f); 
+    glVertex3f(1.74f+translateHeadW,3.6f+translateHeadH,1.0f+translateHeadZ);
+    glVertex3f(1.98f+translateHeadW,2.9f+translateHeadH,1.0f+translateHeadZ); 
 
-    glVertex3f(1.86f,3.7f,1.0f);
-    glVertex3f(2.11f,2.9f,1.0f); 
+    glVertex3f(1.86f+translateHeadW,3.7f+translateHeadH,1.0f+translateHeadZ);
+    glVertex3f(2.11f+translateHeadW,2.9f+translateHeadH,1.0f+translateHeadZ); 
 
-    glVertex3f(2.00f,3.7f,1.0f);
-    glVertex3f(2.19f,2.9f,1.0f);
+    glVertex3f(2.00f+translateHeadW,3.7f+translateHeadH,1.0f+translateHeadZ);
+    glVertex3f(2.19f+translateHeadW,2.9f+translateHeadH,1.0f+translateHeadZ);
 
-    glVertex3f(2.10f,3.8f,1.0f);
-    glVertex3f(2.32f,2.9f,1.0f);
+    glVertex3f(2.10f+translateHeadW,3.8f+translateHeadH,1.0f+translateHeadZ);
+    glVertex3f(2.32f+translateHeadW,2.9f+translateHeadH,1.0f+translateHeadZ);
 
-    glVertex3f(2.22f,3.8f,1.0f);
-    glVertex3f(2.44f,2.9f,1.0f);
+    glVertex3f(2.22f+translateHeadW,3.8f+translateHeadH,1.0f+translateHeadZ);
+    glVertex3f(2.44f+translateHeadW,2.9f+translateHeadH,1.0f+translateHeadZ);
 
-    glVertex3f(2.32f,3.8f,1.0f);
-    glVertex3f(2.54f,2.9f,1.0f);
+    glVertex3f(2.32f+translateHeadW,3.8f+translateHeadH,1.0f+translateHeadZ);
+    glVertex3f(2.54f+translateHeadW,2.9f+translateHeadH,1.0f+translateHeadZ);
 
-    glVertex3f(2.42f,3.8f,1.0f);
-    glVertex3f(2.64f,2.9f,1.0f);
+    glVertex3f(2.42f+translateHeadW,3.8f+translateHeadH,1.0f+translateHeadZ);
+    glVertex3f(2.64f+translateHeadW,2.9f+translateHeadH,1.0f+translateHeadZ);
 
-    glVertex3f(2.52f,3.8f,1.0f);
-    glVertex3f(2.74f,2.9f,1.0f);
+    glVertex3f(2.52f+translateHeadW,3.8f+translateHeadH,1.0f+translateHeadZ);
+    glVertex3f(2.74f+translateHeadW,2.9f+translateHeadH,1.0f+translateHeadZ);
 
-    glVertex3f(2.62f,3.8f,1.0f);
-    glVertex3f(2.84f,2.9f,1.0f);
+    glVertex3f(2.62f+translateHeadW,3.8f+translateHeadH,1.0f+translateHeadZ);
+    glVertex3f(2.84f+translateHeadW,2.9f+translateHeadH,1.0f+translateHeadZ);
 
-    glVertex3f(2.72f,3.8f,1.0f);
-    glVertex3f(2.94f,2.9f,1.0f);
+    glVertex3f(2.72f+translateHeadW,3.8f+translateHeadH,1.0f+translateHeadZ);
+    glVertex3f(2.94f+translateHeadW,2.9f+translateHeadH,1.0f+translateHeadZ);
 
-    glVertex3f(2.82f,3.7f,1.0f);
-    glVertex3f(3.04f,2.9f,1.0f);
+    glVertex3f(2.82f+translateHeadW,3.7f+translateHeadH,1.0f+translateHeadZ);
+    glVertex3f(3.04f+translateHeadW,2.9f+translateHeadH,1.0f+translateHeadZ);
 
     //glVertex3f(2.95f,3.9f,1.0f);
     //glVertex3f(3.18f,2.9f,1.0f);
-    glVertex3f(3.08f,3.9f,1.0f);
-    glVertex3f(3.28f,2.9f,1.0f);
+    glVertex3f(3.08f+translateHeadW,3.9f,1.0f);
+    glVertex3f(3.28f+translateHeadW,2.9f,1.0f);
     glEnd();
     glTranslatef(0.0f,0.0f,translate);
 }    
 glEndList();
 
-glScalef(1.22f,1.22f,1.22f);
+glPopMatrix();
+
+//KNIGHT
+#define KNIGHT 4
+glNewList(KNIGHT,GL_COMPILE);
 glCallList(BASE);
-glTranslatef(-3.5f,1.1f,-1.0f);     
-glCallList(BISHOP);
-     
+float hKnight=1.1;
+float iKnight=1.1;
+int iK=0;
+glColor3f(0.0f,0.0f,1.0f); 
+while(iK<=max){
+    matrixRotationY();
+    glBegin(GL_QUADS);
+        glVertex3f(0.0f, hKnight+2.8, 0.0f);      
+        glVertex3f(0.7, hKnight+2.8, 0.0f); 
+        glVertex3f(0.7, hKnight, 1.0f);      
+        glVertex3f(0.0f, hKnight, 1.0f);   
+    glEnd();
+    glBegin(GL_QUADS);
+        glVertex3f(0.0f, hKnight+2.8, 0.0f);      
+        glVertex3f(0.7, hKnight+2.8, 0.0f); 
+        glVertex3f(0.7, hKnight+0.3+2.8, 1.0f);      
+        glVertex3f(0.0f, hKnight+0.3+2.8, 1.0f);   
+    glEnd();
+    iK++;
+    theta=theta+0.001;
+}
+
+glTranslatef(0.0f,5.0f,0.0);
+     int nlatitud=200;
+     int nlongitud=200;
+     int radio=1;
+     float inct, incf;
+     int i, j;
+     float vertice[3];
+     inct = 2 * PI / nlatitud;
+     incf = PI / nlatitud;
+     glBegin( GL_LINE_LOOP );
+     for( i = 0; i < nlatitud; i++ )
+     {
+          
+          vertice[0] = vertice[1] = 0;
+          vertice[2] =- radio;
+          glVertex3fv( vertice );
+          for( j = 1; j < nlongitud-1; j++ )
+          {
+               vertice[0] = radio * cos(i*inct) * cos(j*incf-0.5*PI);
+               vertice[1] = radio * sin(i*inct) * cos(j*incf-0.5*PI);
+               vertice[2] = radio * sin(j*incf-0.5*PI);
+               glVertex3fv( vertice );
+               vertice[0] = radio*cos((i+1)*inct)*cos(j*incf-0.5*PI);
+               vertice[1] = radio*sin((i+1)*inct)*cos(j*incf-0.5*PI);
+               glVertex3fv(vertice);
+          }
+          vertice[0] = vertice[1] = 0;
+          vertice[2] = radio;
+          glVertex3fv( vertice );
+     }
+     glEnd();
+     glEndList();
+
+
+
+    glPopMatrix();
+    matrixRotationY();
+    glScalef(1.5,1.5,1.5);
+    glCallList(BISHOPHEAD);
+
+    glPopMatrix();
+    matrixRotationY();
+    glScalef(0.7,0.7,0.7);
+    glTranslatef(-8.0f,0.0f,0.0);
+    glCallList(KNIGHT);
+
+
+
+
+
+
 } 
 /* Callback handler for window re-paint event */
 void display() 
