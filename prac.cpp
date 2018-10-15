@@ -23,6 +23,16 @@
 #include <time.h>
 
 #define PI 3.14159265f
+// Definition chess pieces
+#define BASE 1
+#define BISHOP 2
+#define CIRCLE 3
+#define KNIGHT 4
+#define QUEEN 5
+#define KING 6
+#define PAWN 7
+#define ROOK 8
+
 
 GLfloat btnX =0.0;
 GLfloat btnY =8.0;
@@ -30,6 +40,7 @@ GLfloat btnZ =15.0;
 GLfloat theta = 0;
 GLfloat transQueenX=0.0;
 int reflectionBishop=1;
+float max = 360.0;
 GLfloat scalingX=0.7;
 GLfloat scalingY=0.7;
 GLfloat scalingZ=0.7;
@@ -74,6 +85,7 @@ void matrixTranslationQueenX()
  glMultMatrixf(m);
 }
 
+// Translation matrix with respect to x, y and z
 void matrixTranslation(float tx,float ty,float tz)
 {
   float m[]={
@@ -87,9 +99,9 @@ void matrixTranslation(float tx,float ty,float tz)
 void matrixRotationY()
 {
   float m[]={
-     cos(theta),   0.0,   sin(theta),   0.0,
+     cos(theta),   0.0,   -sin(theta),   0.0,
      0.0,   1.0,  0.0,   0.0,
-     -sin(theta),   0.0,   cos(theta),   0.0,
+     sin(theta),   0.0,   cos(theta),   0.0,
      0.0,   0.0,   0.0,   1.0};
  glMultMatrixf(m);
 }
@@ -123,17 +135,8 @@ GLfloat windowXMax, windowXMin, windowYMax, windowYMin; // window bounds
 // Projection window/clipping/work area
 GLdouble windowAreaXLeft, windowAreaXRight, windowAreaYBottom, windowAreaYTop;
  
-/* Initialize OpenGL Graphics */
-void initGL() 
-{
-   glClearColor(0.59f, 0.58f, 0.58f,0.50f); // TODO: Set background (clear) color to black
-}
 
- 
-void draw() // TODO: Create a draw sphere function
-{
-
-
+void grid(void){
 
 for(int j=0;j<=100;j=j+2){
     for(int i=0;i<=100;i++){
@@ -174,7 +177,11 @@ for(int j=0;j<=100;j++){
         glEnd();
 
     }
-}
+	}
+} 
+
+void draw() // TODO: Create a draw sphere function
+{
 
 glPushMatrix();
 glPushMatrix();
@@ -187,87 +194,17 @@ glPushMatrix();
 glPushMatrix();
 glPushMatrix();
 
-#define BASE 1
-glNewList(BASE,GL_COMPILE);
-int newAngle=0;
-float k=0;
-float max = 360.0;
-while(k<=max){
-
-    matrixRotationY();
-    theta=theta+0.001; 
-    glColor3f(0.0,0.0,1.0);
-    glBegin(GL_QUADS);
-        glVertex3f(0.0f, 0.0f, 1.5f);      
-        glVertex3f(1.3f, 0.0f, 1.5f); 
-        glVertex3f(1.3f, 0.25f, 1.5f);      
-        glVertex3f(0.0f, 0.25f, 1.5f);              
-    glEnd();
-    glBegin(GL_QUADS);
-        glVertex3f(0.0f, 0.0f, 1.5f);      
-        glVertex3f(1.3f, 0.0f, 1.5f); 
-        glVertex3f(1.3f, 0.25f, 1.5f);      
-        glVertex3f(0.0f, 0.25f, 1.5f);              
-    glEnd();
-    glBegin(GL_QUADS);
-        glVertex3f(0.0f, 0.25f, 1.5f);      
-        glVertex3f(1.0, 0.25f, 1.5f); 
-        glVertex3f(1.0, 0.40f, 1.5f);      
-        glVertex3f(0.0f, 0.40f, 1.5f);   
-    glEnd();
-    float f=1;
-    for(int i=0;i<=5;i++){
-        glBegin(GL_QUADS);
-        glVertex3f(0.0f, 0.40f, 1.5f);      
-        glVertex3f(f, 0.40f, 1.5f); 
-        glVertex3f(f, 0.5f, 1.5f);      
-        glVertex3f(0.0f, 0.5f, 1.5f);   
-        f=f+0.09;
-        glEnd();
-    }
-    float g=1;
-    float h=0.5;
-    for(int j=0;j<=50;j++){
-        glBegin(GL_QUADS);
-        glVertex3f(0.0f, h, 1.5f);      
-        glVertex3f(g, h, 1.5f); 
-        glVertex3f(g, h+0.01, 1.5f);      
-        glVertex3f(0.0f, h+0.01, 1.5f); 
-        h=h+0.01;
-        g=g-0.01;          
-        glEnd();
-    }
-    for(int j=0;j<=25;j++){
-        glBegin(GL_QUADS);
-        h=h+0.005;
-        glVertex3f(0.0f, h, 1.5f);      
-        glVertex3f(g, h, 1.5f); 
-        glVertex3f(g, h+0.01, 1.5f);      
-        glVertex3f(0.0f, h+0.01, 1.5f); 
-        g=g+0.01;          
-        glEnd();
-    }
-    
-    
-    glBegin(GL_QUADS);
-    glColor3f(0.0f,0.0,1.0f);    // Color Yellow
-    glVertex3f( 0.0f,h,0.0f);    // Top Right Of The Quad (Back)
-    glVertex3f(0.0f,h,1.0f);    // Top Left Of The Quad (Back)
-    glVertex3f(1.2f,h,1.0f);    // Bottom Left Of The Quad (Back)
-    glVertex3f( 1.1f,h,0.0f);    // Bottom Right Of The Quad (Back)
-    glEnd();
 
 
-
-    k=k+0.01;
-}
-glEndList();
 
 glPopMatrix();
 
 //BISHOP
-#define BISHOP 2
-glNewList(BISHOP,GL_COMPILE);
+
+
+
+
+ glNewList(BISHOP,GL_COMPILE);
 glColor3f(0.0f,0.0f,1.0f); 
 float translate=0.01;
 float angleBishop =0;
@@ -379,11 +316,250 @@ for(int i=0;i<=120;i++){
 }    
 glEndList();
 
+
+
+ glPopMatrix();
+
+
+//KNIGHT
+
+glNewList(KNIGHT,GL_COMPILE);
+glCallList(BASE);
+float hKnight=1.1;
+float iKnight=1.1;
+int iK=0;
+glColor3f(0.0f,0.0f,1.0f); 
+while(iK<=max){
+    matrixRotationY();
+    glBegin(GL_QUADS);
+        glVertex3f(0.0f, hKnight+2.8, 0.0f);      
+        glVertex3f(0.7, hKnight+2.8, 0.0f); 
+        glVertex3f(0.7, hKnight, 1.0f);      
+        glVertex3f(0.0f, hKnight, 1.0f);   
+    glEnd();
+    glBegin(GL_QUADS);
+        glVertex3f(0.0f, hKnight+2.8, 0.0f);      
+        glVertex3f(0.7, hKnight+2.8, 0.0f); 
+        glVertex3f(0.7, hKnight+0.3+2.8, 1.0f);      
+        glVertex3f(0.0f, hKnight+0.3+2.8, 1.0f);   
+    glEnd();
+    iK++;
+    theta=theta+0.001;  
+}
+    matrixTranslation(0.0f,5.0f,0.0);
+    glCallList(CIRCLE);
+glEndList();
+
 glPopMatrix();
 
-//Circle
-#define CIRCLE 3
-glNewList(CIRCLE,GL_COMPILE);
+
+
+//KING
+
+glNewList(QUEEN,GL_COMPILE);
+ glCallList(BASE);
+float hKing = 1.0f;
+float iKing = 1.1;
+int iKng = 0;
+
+while(iKng <= max){
+    matrixRotationY();
+   
+ // glColor3f(1.0f,0.0f,0.0f); 
+
+// glColor3ub( (char) rand() % 256, (char) rand() % 256, (char) rand()%256);
+
+ 
+   glBegin(GL_QUADS);
+        glVertex3f(0.0f, hKing +2.8, 0.0f);      
+        glVertex3f(0.7, hKing +2.8, 0.0f); 
+        glVertex3f(0.7, hKing, 1.0f);      
+        glVertex3f(0.0f, hKing, 1.0f);   
+    glEnd();
+
+
+ // glColor3ub( (char) rand() % 256, (char) rand() % 256, (char) rand()%256);
+
+// Up part 1 
+	// glColor3f(1.0f,0.0f,0.0f); 
+
+	glBegin(GL_QUADS);
+        glVertex3f(0.0f, hKing +2.8, 0.0f);      
+        glVertex3f(0.7, hKing +2.8, 0.0f); 
+        glVertex3f(0.7, hKing +0.3+2.8, 1.0f);      
+        glVertex3f(0.0f, hKing +0.3+2.8, 1.0f);   
+    glEnd();
+
+
+// Donw part
+	
+    glBegin(GL_QUADS);
+        glVertex3f(0.0f, hKing +2.8+0.3*2, 0.0f);      
+        glVertex3f(0.7, hKing +2.8+0.3*2, 0.0f); 
+        glVertex3f(0.7, hKing, 1.0f);      
+        glVertex3f(0.0f, hKing, 1.0f);   
+    glEnd();
+
+// Up part 2
+
+    glBegin(GL_QUADS);
+        glVertex3f(0.0f, hKing +0.3+2.8, 0.0f);      
+        glVertex3f(0.7, hKing +0.3+2.8, 0.0f); 
+        glVertex3f(0.7, hKing +0.3+3.1, 1.0f);      
+        glVertex3f(0.0f, hKing +0.3+3.1, 1.0f);   
+    glEnd();
+
+
+
+    glBegin(GL_QUADS);
+        glVertex3f(0.0f, hKing +2.8+0.3*5, 0.0f);      
+        glVertex3f(0.7, hKing +2.8+0.3*5, 0.0f); 
+        glVertex3f(0.7, hKing, 1.0f);      
+        glVertex3f(0.0f, hKing, 1.0f);   
+    glEnd();
+
+
+    glBegin(GL_QUADS);
+        glVertex3f(0.0f, hKing +2.8+0.3*5, 0.0f);      
+        glVertex3f(0.7, hKing +2.8+0.3*5, 0.0f); 
+        glVertex3f(0.7, hKing +2.8+0.3*5+0.3, 1.0f);      
+        glVertex3f(0.0f, hKing +2.8+0.3*5+0.3, 1.0f);   
+    glEnd(); 
+
+  
+    iKng++;
+    theta=theta+0.001;  
+}
+    scale(0.5,0.5,0.5);
+     matrixTranslation(0.0f,12.0,0.0);
+    glCallList(CIRCLE);
+glEndList();
+
+glPopMatrix();        
+matrixTranslation(6.0f,0.0,0.0);  
+reflectionXY();      
+ glCallList(BISHOP);
+
+glPopMatrix();  
+matrixTranslationQueenX();
+ glCallList(QUEEN);
+
+glPopMatrix();
+matrixTranslation(-6.0f,0.0f,0.0);
+scalingXYZ();
+ glCallList(KNIGHT);
+} 
+
+
+void drawBase(void){
+
+int newAngle=0;
+float k=0;
+int max2 = 360;
+while(k<=max2){
+
+    matrixRotationY();
+    theta = theta+0.001; 
+
+     glColor3f(0.0,0.0,1.0);
+  //  glColor3ub( (char) rand()%256, (char) rand()%256, (char) rand()%256);
+
+
+// Bottom Part
+
+
+    glBegin(GL_QUADS);
+        glVertex3f(0.0f, 0.0f, 1.5f);      
+        glVertex3f(1.3f, 0.0f, 1.5f); 
+        glVertex3f(1.3f, 0.25f, 1.5f);      
+        glVertex3f(0.0f, 0.25f, 1.5f);              
+    glEnd();
+
+
+/*
+	 glColor3f(1.0,0.0,0.0);
+    glBegin(GL_QUADS);
+        glVertex3f(0.0f, 0.0f, 1.5f);      
+        glVertex3f(1.3f, 0.0f, 1.5f); 
+        glVertex3f(1.3f, 0.25f, 1.5f);      
+        glVertex3f(0.0f, 0.25f, 1.5f);              
+    glEnd();
+*/
+
+	
+	
+    glBegin(GL_QUADS);
+        glVertex3f(0.0f, 0.25f, 1.5f);    
+        glVertex3f(1.0, 0.25f, 1.5f); 
+        glVertex3f(1.0, 0.40f, 1.5f);      
+        glVertex3f(0.0f, 0.40f, 1.5f);   
+    glEnd();
+
+
+    float f=1;
+    for(int i=0;i<=5;i++){
+        glBegin(GL_QUADS);
+        glVertex3f(0.0f, 0.40f, 1.5f);      
+        glVertex3f(f, 0.40f, 1.5f); 
+        glVertex3f(f, 0.5f, 1.5f);      
+        glVertex3f(0.0f, 0.5f, 1.5f);   
+        f=f+0.09;
+        glEnd();
+    }
+
+
+// glColor3f(1.0,0.0,0.0);
+
+// Part cone upsidedown (like blocks)
+    float g=1;
+    float h=0.5;
+
+    for(int j=0;j<=50;j++){
+
+        glBegin(GL_QUADS);
+        glVertex3f(0.0f, h, 1.5f);      
+        glVertex3f(g, h, 1.5f); 
+        glVertex3f(g, h+0.01, 1.5f);      
+        glVertex3f(0.0f, h+0.01, 1.5f); 
+        h=h+0.01;
+        g=g-0.01;          
+        glEnd();
+
+    }
+
+// Part cone 
+
+    for(int j=0;j<=25;j++){
+        glBegin(GL_QUADS);
+        h=h+0.005;
+        glVertex3f(0.0f, h, 1.5f);      
+        glVertex3f(g, h, 1.5f); 
+        glVertex3f(g, h+0.01, 1.5f);      
+        glVertex3f(0.0f, h+0.01, 1.5f); 
+        g=g+0.01;          
+        glEnd();
+    }
+   
+    
+// Top of the base
+
+    glBegin(GL_QUADS);
+    glColor3f(0.0f,0.0,1.0f);    
+    glVertex3f( 0.0f,h,0.0f);    
+    glVertex3f(0.0f,h,1.0f);    
+    glVertex3f(1.2f,h,1.0f);    
+    glVertex3f( 1.1f,h,0.0f);    
+    glEnd();
+	
+
+    k=k+0.01;
+	}
+}
+
+
+void drawSphere(void){
+
+
     glColor3f(0.0f,0.0f,1.0f); 
      int nlatitud=200;
      int nlongitud=200;
@@ -415,113 +591,80 @@ glNewList(CIRCLE,GL_COMPILE);
           glVertex3fv( vertice );
      }
      glEnd();
-glEndList();
 
-//KNIGHT
-#define KNIGHT 4
-glNewList(KNIGHT,GL_COMPILE);
-glCallList(BASE);
-float hKnight=1.1;
-float iKnight=1.1;
-int iK=0;
-glColor3f(0.0f,0.0f,1.0f); 
-while(iK<=max){
-    matrixRotationY();
-    glBegin(GL_QUADS);
-        glVertex3f(0.0f, hKnight+2.8, 0.0f);      
-        glVertex3f(0.7, hKnight+2.8, 0.0f); 
-        glVertex3f(0.7, hKnight, 1.0f);      
-        glVertex3f(0.0f, hKnight, 1.0f);   
-    glEnd();
-    glBegin(GL_QUADS);
-        glVertex3f(0.0f, hKnight+2.8, 0.0f);      
-        glVertex3f(0.7, hKnight+2.8, 0.0f); 
-        glVertex3f(0.7, hKnight+0.3+2.8, 1.0f);      
-        glVertex3f(0.0f, hKnight+0.3+2.8, 1.0f);   
-    glEnd();
-    iK++;
-    theta=theta+0.001;  
+
+
+
 }
-    matrixTranslation(0.0f,5.0f,0.0);
-    glCallList(CIRCLE);
-glEndList();
 
-glPopMatrix();
 
-//KING
-#define QUEEN 5
-glNewList(QUEEN,GL_COMPILE);
+
+void drawKing(void){
+
+float k = 0.0f;
+float hking = 1.1f;
 glCallList(BASE);
-float hKing =1.1;
-float iKing =1.1;
-int iKng =0;
-glColor3f(0.0f,0.0f,1.0f); 
-while(iKng<=max){
+while(k<=max){
+
     matrixRotationY();
-    glBegin(GL_QUADS);
-        glVertex3f(0.0f, hKing +2.8, 0.0f);      
-        glVertex3f(0.7, hKing +2.8, 0.0f); 
-        glVertex3f(0.7, hKing, 1.0f);      
-        glVertex3f(0.0f, hKing, 1.0f);   
+    theta = theta+0.001; 
+    glBegin(GL_LINE_LOOP);
+
+		glVertex3f(0.6f,hking+5.2f ,0.0f);  
+        glVertex3f(0.6f,hking+5.4f ,0.0f);      
+        glVertex3f(0.6f,hking+ 5.2f, 0.0f);
+        glVertex3f(1.1f,hking+ 5.2f, 0.0f);
+         glVertex3f(0.7f,hking+ 3.8f, 0.0f);
+        glVertex3f(0.9f,hking+ 3.8f, 0.0f);
+        glVertex3f(0.9f,hking+ 3.6f, 0.0f);
+        glVertex3f(0.7f,hking+ 3.6f, 0.0f);
+		glVertex3f(0.7f,hking+ 3.3f, 0.0f);
+		glVertex3f(1.0f,hking+ 3.3f, 0.0f);
+
+		glVertex3f(1.0f,hking+ 3.1f, 0.0f);
+		glVertex3f(1.3f,hking+ 3.1f, 0.0f);
+		
+		
+		glVertex3f(1.3f,hking+ 2.9f, 0.0f);
+		glVertex3f(0.5f,hking+ 2.9f, 0.0f);
+		glVertex3f(0.8f,hking+ 0.0f, 0.0f);
+		glVertex3f(0.0f,hking+ 0.0f, 0.0f);
+             
     glEnd();
-    glBegin(GL_QUADS);
-        glVertex3f(0.0f, hKing +2.8, 0.0f);      
-        glVertex3f(0.7, hKing +2.8, 0.0f); 
-        glVertex3f(0.7, hKing +0.3+2.8, 1.0f);      
-        glVertex3f(0.0f, hKing +0.3+2.8, 1.0f);   
-    glEnd();
-    glBegin(GL_QUADS);
-        glVertex3f(0.0f, hKing +2.8+0.3*2, 0.0f);      
-        glVertex3f(0.7, hKing +2.8+0.3*2, 0.0f); 
-        glVertex3f(0.7, hKing, 1.0f);      
-        glVertex3f(0.0f, hKing, 1.0f);   
-    glEnd();
-    glBegin(GL_QUADS);
-        glVertex3f(0.0f, hKing +0.3+2.8, 0.0f);      
-        glVertex3f(0.7, hKing +0.3+2.8, 0.0f); 
-        glVertex3f(0.7, hKing +0.3+3.1, 1.0f);      
-        glVertex3f(0.0f, hKing +0.3+3.1, 1.0f);   
-    glEnd();
-    glBegin(GL_QUADS);
-        glVertex3f(0.0f, hKing +2.8+0.3*5, 0.0f);      
-        glVertex3f(0.7, hKing +2.8+0.3*5, 0.0f); 
-        glVertex3f(0.7, hKing, 1.0f);      
-        glVertex3f(0.0f, hKing, 1.0f);   
-    glEnd();
-    glBegin(GL_QUADS);
-        glVertex3f(0.0f, hKing +2.8+0.3*5, 0.0f);      
-        glVertex3f(0.7, hKing +2.8+0.3*5, 0.0f); 
-        glVertex3f(0.7, hKing +2.8+0.3*5+0.3, 1.0f);      
-        glVertex3f(0.0f, hKing +2.8+0.3*5+0.3, 1.0f);   
-    glEnd();    
-    iKng++;
-    theta=theta+0.001;  
+    k=k+0.01;     
 }
-    scale(0.5,0.5,0.5);
-    matrixTranslation(0.0f,12.0,0.0);
-    glCallList(CIRCLE);
-glEndList();
 
-glPopMatrix();        
-matrixTranslation(6.0f,0.0,0.0);  
-reflectionXY();      
-glCallList(BISHOP);
-
-glPopMatrix();  
-matrixTranslationQueenX();
-glCallList(QUEEN);
-
-glPopMatrix();
-matrixTranslation(-8.0f,0.0f,0.0);
-scalingXYZ();
-glCallList(KNIGHT);
+}
 
 
 
+/* Initialize OpenGL Graphics */
+void initGL() 
+{
+   glClearColor(0.58f, 0.58f, 0.58f,1.0f); // TODO: Set background (clear) color to gray
+	
+   // Create list to KING
+   glNewList(KING, GL_COMPILE);	
+	
+	drawKing();
+	glEndList();
+
+
+	glNewList(BASE,GL_COMPILE);
+	drawBase();
+	glEndList();
+
+	glNewList(CIRCLE,GL_COMPILE);
+	drawSphere();
+	glEndList();
+
+}
 
 
 
-} 
+
+
+
 /* Callback handler for window re-paint event */
 void display() 
 {
@@ -531,14 +674,29 @@ void display()
    glLoadIdentity();              // TODO: Reset model-view matrix
       
    gluLookAt(btnX,btnY,btnZ, 0.0,0.0,0.0, 0.0,1.0,0.0);      //TODO: Define camera settings
-    
-   //glColor3f(0.0f, 0.0f, 1.0f);  // TODO: Set the color of the object
-   /* Draw a sphere */
-   draw();        // TODO: Draw a Sphere, test using different primitives polygon/square/triangle/line STRIP/ what is the difference?, what does it happen with filled color?
    
+   // Draw the grid  
+   grid();
+  
+   // Call list King
+	glPushMatrix();
+   matrixTranslation(-12.0f,0.0f,0.0);
+   glCallList(KING);  
+	glPopMatrix();   	
+  
+    draw();
+ //  glCallList(BASE);  
+
+   printf("To move the camera in y. Please press r or f key \n");
+	printf("To move the camera in x. Please press w or e key \n");
+	printf("To move the camera in z. Please press d or c key \n");
    glFlush ();                   //TODO: Render Object
 }
  
+
+
+
+
 /* Call back when the windows is re-sized */
 void reshape(GLsizei width, GLsizei height) {
    // Compute aspectRatio ratio of the new window
@@ -595,29 +753,33 @@ void mykey(unsigned char key, int x, int y)
         reflectionBishop=reflectionBishop*(-1);
     };
 
-    if(key == 'W' | key == 'w'){
+
+
+    // Move in the y negative direction
+    if(key == 'F' | key == 'f'){
         btnY=btnY-1.0f;
     };
 
-    if(key == 'E' | key == 'e'){
+	// Move in the y positive direction
+    if(key == 'R' | key == 'r'){
         btnY=btnY+1.0f;
     };
-
-    if(key == 'J' | key == 'j'){    
+	// Move in the x negative direction
+    if(key == 'W' | key == 'w'){    
         btnX=btnX-1.0f;
     };
-
-    if(key == 'L' | key == 'l'){
+	// Move in the x positive direction
+    if(key == 'E' | key == 'e'){
         btnX=btnX+1.0f;
     };    
-       
-    if(key == 'I' | key == 'i'){
+     // Move in the z negative direction
+    if(key == 'D' | key == 'd'){
         btnZ=btnZ-1.0f;
     };
-
-    if(key == 'k' | key == 'k'){
+	// Move in the z positive direction
+    if(key == 'C' | key == 'c'){
         btnZ=btnZ+1.0f;
-    };  
+    };   
 
 
 
