@@ -39,7 +39,10 @@
 GLfloat btnX =0.0;
 GLfloat btnY =8.0;
 GLfloat btnZ =15.0;
+GLfloat btnX2=0.0;
+GLfloat btnY2=1.0;
 GLfloat theta = 0;
+GLfloat beta = 0.0;
 GLfloat transQueenX=0.0;
 int reflectionBishop=1;
 float max = 360.0;
@@ -108,6 +111,16 @@ void matrixRotationY()
  glMultMatrixf(m);
 }
 
+void rotationScenaY()
+{
+  float m[]={
+     cos(beta),   0.0,   -sin(beta),   0.0,
+     0.0,   1.0,  0.0,   0.0,
+     sin(beta),   0.0,   cos(beta),   0.0,
+     0.0,   0.0,   0.0,   1.0};
+ glMultMatrixf(m);
+}
+
 void matrixRotationZ()
 {
   float m[]={
@@ -139,47 +152,32 @@ GLdouble windowAreaXLeft, windowAreaXRight, windowAreaYBottom, windowAreaYTop;
  
 
 void grid(void){
+    
+    for(int i=0;i<=7;i++){
 
-for(int j=0;j<=100;j=j+2){
-    for(int i=0;i<=100;i++){
-        glBegin(GL_LINE_LOOP);
-        glColor3f(1.0f,0.0f,0.0f);                 
-        glVertex3f( 1.0f+j, 1.0f+i, -10.0f);    
-        glVertex3f(-1.0f+j, 1.0f+i, -10.0f);    
-        glVertex3f(-1.0f+j,-1.0f+i, -10.0f);    
-        glVertex3f( 1.0f+j,-1.0f+i, -10.0f);   
-        glEnd();
-
-        glBegin(GL_LINE_LOOP);
-        glColor3f(1.0f,0.0f,0.0f);                 
-        glVertex3f( 1.0f-j, 1.0f+i, -10.0f);    
-        glVertex3f(-1.0f-j, 1.0f+i, -10.0f);    
-        glVertex3f(-1.0f-j,-1.0f+i, -10.0f);   
-        glVertex3f( 1.0f-j,-1.0f+i, -10.0f);    
-        glEnd();
-    }
-}
-
-for(int j=0;j<=100;j++){
-    for(int i=0;i<=100;i++){
-        glBegin(GL_LINE_LOOP);
-        glColor3f(1.0f+j,0.0f,0.0f);              
-        glVertex3f(0.0f+j,0.0f, -10.0f+i);    
-        glVertex3f(-10.0f+j,0.0f, -10.0f+i);    
-        glVertex3f(-10.0f+j,0.0f,-9.0f+i);   
-        glVertex3f(0.0f+j,0.0f,-9.0f+i);    
-        glEnd();
-
-        glBegin(GL_LINE_LOOP);
-        glColor3f(1.0f+j,0.0f,0.0f);             
-        glVertex3f(0.0f-j,0.0f, -10.0f+i);    
-        glVertex3f(-10.0f-j,0.0f, -10.0f+i);    
-        glVertex3f(-10.0f-j,0.0f,-9.0f+i);    
-        glVertex3f(0.0f-j,0.0f,-9.0f+i);    
-        glEnd();
-
-    }
-	}
+        for(int j=0;j<=7;j++){
+            if(i%2>0){
+                if( j%2 > 0 ){
+                    glColor3f(1.0f,1.0f,1.0f); 
+                }else{
+                    glColor3f(0.0f,0.0f,0.0f); 
+                } 
+            }else{
+                if( j%2 == 0 ){
+                    glColor3f(1.0f,1.0f,1.0f); 
+                }else{
+                    glColor3f(0.0f,0.0f,0.0f); 
+                }
+            }
+                       
+            glBegin(GL_QUADS);                         
+            glVertex3f(-20.0f+j*4.3,0.0f, -20.0f+i*4.3);    
+            glVertex3f(-15.7f+j*4.3,0.0f, -20.0f+i*4.3);    
+            glVertex3f(-15.7+j*4.3,0.0f, -15.7f+i*4.3);   
+            glVertex3f(-20.0f+j*4.3,0.0f, -15.7f+i*4.3);    
+            glEnd();
+        }
+    }    
 } 
 
 void drawBishop(void){
@@ -323,82 +321,58 @@ while(iK<=max){
 
 
 void drawQueen(void){
-glCallList(BASE);
 float hKing = 1.0f;
 float iKing = 1.1;
 int iKng = 0;
 
+glCallList(BASE);
 while(iKng <= max){
     matrixRotationY();
-   
- // glColor3f(1.0f,0.0f,0.0f); 
 
-// glColor3ub( (char) rand() % 256, (char) rand() % 256, (char) rand()%256);
+    //Down to Up
+    glBegin(GL_QUADS);
+        glVertex3f(0.0f, hKing +5.8, 0.0f);      
+        glVertex3f(0.5, hKing +5.8, 0.0f); 
+        glVertex3f(0.9, hKing, 0.1f);      
+        glVertex3f(0.0f, hKing, 0.1f);   
+    glEnd();
 
- 
+    glBegin(GL_QUADS);
+        glVertex3f(0.0f, hKing +3.9, 0.0f);      
+        glVertex3f(0.7, hKing +3.9, 0.0f); 
+        glVertex3f(0.7, hKing +4.3, 0.8f);      
+        glVertex3f(0.0f, hKing +4.3, 0.8f);   
+    glEnd();
+
+    glBegin(GL_QUADS);
+        glVertex3f(0.0f, hKing +4.2, 0.0f);      
+        glVertex3f(0.7, hKing +4.2, 0.0f); 
+        glVertex3f(0.7, hKing +3.9, 0.8f);      
+        glVertex3f(0.0f, hKing +3.9, 0.8f);   
+    glEnd();
+
    glBegin(GL_QUADS);
-        glVertex3f(0.0f, hKing +2.8, 0.0f);      
-        glVertex3f(0.7, hKing +2.8, 0.0f); 
-        glVertex3f(0.7, hKing, 1.0f);      
-        glVertex3f(0.0f, hKing, 1.0f);   
+        glVertex3f(0.0f, hKing +3.2, 0.0f);      
+        glVertex3f(1.3, hKing +3.2, 0.0f); 
+        glVertex3f(1.3, hKing +3.5, 0.0f);      
+        glVertex3f(0.0f, hKing +3.5, 0.0f);   
     glEnd();
-
-
- // glColor3ub( (char) rand() % 256, (char) rand() % 256, (char) rand()%256);
-
-// Up part 1 
-	// glColor3f(1.0f,0.0f,0.0f); 
-
-	glBegin(GL_QUADS);
-        glVertex3f(0.0f, hKing +2.8, 0.0f);      
-        glVertex3f(0.7, hKing +2.8, 0.0f); 
-        glVertex3f(0.7, hKing +0.3+2.8, 1.0f);      
-        glVertex3f(0.0f, hKing +0.3+2.8, 1.0f);   
-    glEnd();
-
-
-// Donw part
-	
-    glBegin(GL_QUADS);
-        glVertex3f(0.0f, hKing +2.8+0.3*2, 0.0f);      
-        glVertex3f(0.7, hKing +2.8+0.3*2, 0.0f); 
-        glVertex3f(0.7, hKing, 1.0f);      
-        glVertex3f(0.0f, hKing, 1.0f);   
-    glEnd();
-
-// Up part 2
 
     glBegin(GL_QUADS);
-        glVertex3f(0.0f, hKing +0.3+2.8, 0.0f);      
-        glVertex3f(0.7, hKing +0.3+2.8, 0.0f); 
-        glVertex3f(0.7, hKing +0.3+3.1, 1.0f);      
-        glVertex3f(0.0f, hKing +0.3+3.1, 1.0f);   
+        glVertex3f(0.0f, hKing +5.8, 0.0f);      
+        glVertex3f(1.2, hKing +5.8, 0.0f); 
+        glVertex3f(0.7, hKing+4.3, 0.1f);      
+        glVertex3f(0.0f, hKing+4.3, 0.1f);   
     glEnd();
 
-
-
-    glBegin(GL_QUADS);
-        glVertex3f(0.0f, hKing +2.8+0.3*5, 0.0f);      
-        glVertex3f(0.7, hKing +2.8+0.3*5, 0.0f); 
-        glVertex3f(0.7, hKing, 1.0f);      
-        glVertex3f(0.0f, hKing, 1.0f);   
-    glEnd();
-
-
-    glBegin(GL_QUADS);
-        glVertex3f(0.0f, hKing +2.8+0.3*5, 0.0f);      
-        glVertex3f(0.7, hKing +2.8+0.3*5, 0.0f); 
-        glVertex3f(0.7, hKing +2.8+0.3*5+0.3, 1.0f);      
-        glVertex3f(0.0f, hKing +2.8+0.3*5+0.3, 1.0f);   
-    glEnd(); 
-
-  
     iKng++;
     theta=theta+0.001;  
 }
+   matrixTranslation(0.0f,7.0,0.0);
     scale(0.5,0.5,0.5);
-     matrixTranslation(0.0f,12.0,0.0);
     glCallList(CIRCLE);
+    
+    
 }
 
 
@@ -595,8 +569,6 @@ float h = 0, g = 0;
 	}
 }
 
-
-
 void drawSphere(void){
     glColor3f(0.0f,0.0f,1.0f); 
      int nlatitud=200;
@@ -784,11 +756,30 @@ void drawSixPieces(){
 	glPopMatrix(); 
 }
 
+void printInformation(void){
+    puts("To move the camera in y. Please press r or f key \n"
+    "To move the camera in x. Please press w or e key \n"
+    "To move the camera in z. Please press d or c key \n"
+    "To apply reflection at bishop. Please press b or B key \n"
+    "To apply rotation at king. Please press k or K key \n"
+    "To apply scaling  at knight. Please press n or N key \n"
+    "To apply shear at pawn. Please press s or S key \n"
+    "To apply translation in X at queen. Please press q or Q key \n"
+    "To apply translation in Z at rook. Please press r or R key \n"
+    "Press 5 to top view \n"
+    "Press 2 to top front \n"
+    "Press 8 to back view \n"
+    "Press 4 to left view \n"
+    "Press 6 to right view \n"
+    "Press 7 and 9 to rotate all\n");
+}
+
 /* Initialize OpenGL Graphics */
 void initGL() 
 {
    glClearColor(0.58f, 0.58f, 0.58f,1.0f); // TODO: Set background (clear) color to gray
-   createList();	
+   createList();
+   printInformation();	
 }
 
 /* Callback handler for window re-paint event */
@@ -799,7 +790,10 @@ void display()
    glMatrixMode(GL_MODELVIEW);    // TODO: To operate on the model-view matrix
    glLoadIdentity();              // TODO: Reset model-view matrix
       
-   gluLookAt(btnX,btnY,btnZ, 0.0,0.0,0.0, 0.0,1.0,0.0);      //TODO: Define camera settings
+   gluLookAt(btnX,btnY,btnZ, 0.0,0.0,0.0, btnX2,btnY2,0.0);      //TODO: Define camera settings
+   
+
+   rotationScenaY();
    
    // Draw the grid  
    grid();
@@ -807,17 +801,9 @@ void display()
   // Draw pieces
    drawSixPieces();
 
-    puts("To move the camera in y. Please press r or f key \n"
-   "To move the camera in x. Please press w or e key \n"
-   "To move the camera in z. Please press d or c key \n");
-
    glFlush ();                   //TODO: Render Object
 }
  
-
-
-
-
 /* Call back when the windows is re-sized */
 void reshape(GLsizei width, GLsizei height) {
    // Compute aspectRatio ratio of the new window
@@ -860,20 +846,78 @@ void mykey(unsigned char key, int x, int y)
     case 27: // Escape key
       exit (0);
   }
-	if(key == 'Q'){
-        transQueenX=transQueenX+0.1;
+
+    //rotate all
+	if(key == '7'){
+        beta=beta+0.1;
     };
 
+    //rotate all
+	if(key == '9'){
+        beta=beta-0.1;
+    };
+
+    //up view
+	if(key == '5'){
+        beta=0.0;
+        btnX =0.0;
+        btnY =30.0;
+        btnZ =0.0;
+        btnX2=1.0;
+        btnY2=0.0;
+    };
+
+    //front view
+	if(key == '2'){
+        beta=0.0;
+        btnX =0.0;
+        btnY =5.0;
+        btnZ =30.0;
+        btnX2=0.0;
+        btnY2=1.0;
+    };
+
+    //back view
+	if(key == '8'){
+        beta=0.0;
+        btnX =0.0;
+        btnY =5.0;
+        btnZ =-30.0;
+        btnX2=0.0;
+        btnY2=1.0;
+    };
+
+    //left view
+	if(key == '4'){
+        beta=0.0;
+        btnX =-30.0;
+        btnY =5.0;
+        btnZ =0.0;
+        btnX2=0.0;
+        btnY2=1.0;
+    };
+
+    //right view
+	if(key == '6'){
+        beta=0.0;
+        btnX =30.0;
+        btnY =5.0;
+        btnZ =0.0;
+        btnX2=0.0;
+        btnY2=1.0;
+    };
+    
+    if(key == 'Q'){
+        transQueenX=transQueenX+0.1;
+    };
     if(key == 'q'){
         transQueenX=transQueenX-0.1;
     };
 
-
-
+    //Transformation to Bishop
     if(key == 'B' | key == 'b'){
         reflectionBishop=reflectionBishop*(-1);
     };
-
 
     // Move in the y negative direction
     if(key == 'F' | key == 'f'){
@@ -901,13 +945,14 @@ void mykey(unsigned char key, int x, int y)
         btnZ=btnZ+1.0f;
     };   
 
-    if(key == 's' ){
+    if(key == 'n' ){
         scalingX=scalingX-0.1;
         scalingY=scalingY-0.1;
         scalingZ=scalingZ-0.1;      
     };
 
-    if(key == 'S'){
+    //Transformation knight
+    if(key == 'N'){
         scalingX=scalingX+0.1;
         scalingY=scalingY+0.1;
         scalingZ=scalingZ+0.1;
