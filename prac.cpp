@@ -32,7 +32,9 @@
 #define KING 6
 #define PAWN 7
 #define ROOK 8
-
+#define CROSS 9
+#define BASETOWER 10
+#define TOWER 11
 
 GLfloat btnX =0.0;
 GLfloat btnY =8.0;
@@ -455,27 +457,20 @@ void drawBase(void){
 
 int newAngle=0;
 float k=0;
-int max2 = 360;
-while(k<=max2){
+while(k<=max){
 
     matrixRotationY();
     theta = theta+0.001; 
 
      glColor3f(0.0,0.0,1.0);
-  //  glColor3ub( (char) rand()%256, (char) rand()%256, (char) rand()%256);
-
-
+//  glColor3ub( (char) rand()%256, (char) rand()%256, (char) rand()%256);
 // Bottom Part
-
-
     glBegin(GL_QUADS);
         glVertex3f(0.0f, 0.0f, 1.5f);      
         glVertex3f(1.3f, 0.0f, 1.5f); 
         glVertex3f(1.3f, 0.25f, 1.5f);      
         glVertex3f(0.0f, 0.25f, 1.5f);              
     glEnd();
-
-
 /*
 	 glColor3f(1.0,0.0,0.0);
     glBegin(GL_QUADS);
@@ -485,16 +480,12 @@ while(k<=max2){
         glVertex3f(0.0f, 0.25f, 1.5f);              
     glEnd();
 */
-
-	
-	
     glBegin(GL_QUADS);
         glVertex3f(0.0f, 0.25f, 1.5f);    
         glVertex3f(1.0, 0.25f, 1.5f); 
         glVertex3f(1.0, 0.40f, 1.5f);      
         glVertex3f(0.0f, 0.40f, 1.5f);   
     glEnd();
-
 
     float f=1;
     for(int i=0;i<=5;i++){
@@ -557,6 +548,118 @@ while(k<=max2){
 }
 
 
+void drawBaseTower(void){
+
+int newAngle=0;
+float k=0;
+while(k<=max){
+
+    matrixRotationY();
+    theta = theta+0.001; 
+
+     glColor3f(0.0,0.0,1.0);
+	
+    glBegin(GL_QUADS);
+        glVertex3f(0.0f, 0.0f, 1.5f);      
+        glVertex3f(1.3f, 0.0f, 1.5f); 
+        glVertex3f(1.3f, 0.25f, 1.5f);      
+        glVertex3f(0.0f, 0.25f, 1.5f);              
+    glEnd();
+	
+
+    glBegin(GL_QUADS);
+        glVertex3f(0.0f, 0.25f, 1.5f);    
+        glVertex3f(1.0, 0.25f, 1.5f); 
+        glVertex3f(1.0, 0.40f, 1.5f);      
+        glVertex3f(0.0f, 0.40f, 1.5f);   
+    glEnd();
+
+
+    float f=1;
+    for(int i=0;i<=5;i++){
+        glBegin(GL_QUADS);
+        glVertex3f(0.0f, 0.40f, 1.5f);      
+        glVertex3f(f, 0.40f, 1.5f); 
+        glVertex3f(f, 0.5f, 1.5f);      
+        glVertex3f(0.0f, 0.5f, 1.5f);   
+        f=f+0.09;
+        glEnd();
+    }
+
+
+// glColor3f(1.0,0.0,0.0);
+
+// Part cone upsidedown (like blocks)
+    float g=1;
+    float h=0.5;
+
+    for(int j=0;j<=50;j++){
+
+        glBegin(GL_QUADS);
+        glVertex3f(0.0f, h, 1.5f);      
+        glVertex3f(g, h, 1.5f); 
+        glVertex3f(g, h+0.015, 1.5f);      
+        glVertex3f(0.0f, h+0.015, 1.5f); 
+        h=h+0.015;
+        g=g-0.015;          
+        glEnd();
+
+    }
+
+
+      
+// Top of the base
+
+    glBegin(GL_QUADS);
+    glColor3f(0.0f,0.0,1.0f);    
+    glVertex3f( 0.0f,h,0.0f);    
+    glVertex3f(0.0f,h,1.0f);    
+    glVertex3f(1.2f,h,1.0f);    
+    glVertex3f( 1.1f,h,0.0f);    
+    glEnd();
+	
+
+    k=k+0.01;
+	}
+
+}
+
+void drawCross(void){
+
+float translate=0.01;
+float h = 0, g = 0;
+	for(int i=0;i<=1000;i++){
+	// glColor3f((char) rand()%256, (char) rand()%256, (char) rand()%256);
+	glColor3f(0.0f,0.0f,1.0f);
+    glBegin(GL_QUADS);
+	glVertex3f( 0.0f,h,0.0f); 
+	glVertex3f( 0.3f,h,0.0f); 
+	glVertex3f( 0.3f,h,0.5f); 
+	glVertex3f( 0.0f,h,0.5f); 
+	glEnd();
+
+		h = h + 0.0012;
+	}
+
+	
+	for(int j=0;j<=1000;j++){
+	
+    glBegin(GL_POLYGON);
+
+	glVertex3f( 0.0f, g + 0.3, -0.3f); 
+	glVertex3f( 0.3f, g + 0.3, -0.3f); 
+	glVertex3f( 0.3f, g + 0.3, 0.8f); 
+	glVertex3f( 0.0f, g + 0.3, 0.8f); 
+	glEnd();
+
+		g = g + 0.0006;
+	}
+	
+
+}
+
+
+
 void drawSphere(void){
 
 
@@ -598,11 +701,53 @@ void drawSphere(void){
 }
 
 
+void drawTower(void){
+float k = 0.0f;
+float hTower = 1.3f;
+
+glPushMatrix();
+scale(0.9, 0.9, 0.9);
+glCallList(BASETOWER);
+glPopMatrix();
+
+while(k<=max){
+
+    matrixRotationY();
+    theta = theta+0.001; 
+    glBegin(GL_LINE_LOOP);
+
+		
+		glVertex3f(0.0f,hTower + 3.5f, 0.0f);
+		glVertex3f(1.1f,hTower + 3.5f, 0.0f);
+
+		glVertex3f(1.1f,hTower + 2.7f, 0.0f);
+		glVertex3f(0.8f,hTower + 2.7f, 0.0f);
+		
+		
+		glVertex3f(0.8f,hTower + 2.5f, 0.0f);
+		glVertex3f(0.7f,hTower + 2.5f, 0.0f);
+		glVertex3f(1.3f,hTower + 0.0f, 0.0f);
+		glVertex3f(0.0f,hTower + 0.0f, 0.0f);
+             
+    glEnd();
+    k=k+0.01;     
+}
+}
+
+
 
 void drawKing(void){
 
+glPushMatrix();
+glTranslatef(0.0f,6.5f,0.0f);
+
+glCallList(CROSS);
+glPopMatrix();
+
 float k = 0.0f;
 float hking = 1.1f;
+
+
 glCallList(BASE);
 while(k<=max){
 
@@ -614,7 +759,7 @@ while(k<=max){
         glVertex3f(0.6f,hking+5.4f ,0.0f);      
         glVertex3f(0.6f,hking+ 5.2f, 0.0f);
         glVertex3f(1.1f,hking+ 5.2f, 0.0f);
-         glVertex3f(0.7f,hking+ 3.8f, 0.0f);
+        glVertex3f(0.7f,hking+ 3.8f, 0.0f);
         glVertex3f(0.9f,hking+ 3.8f, 0.0f);
         glVertex3f(0.9f,hking+ 3.6f, 0.0f);
         glVertex3f(0.7f,hking+ 3.6f, 0.0f);
@@ -658,6 +803,18 @@ void initGL()
 	drawSphere();
 	glEndList();
 
+	glNewList(CROSS,GL_COMPILE);
+	drawCross();
+	glEndList();
+
+	glNewList(BASETOWER,GL_COMPILE);
+	drawBaseTower();
+	glEndList();
+
+    glNewList(TOWER,GL_COMPILE);
+	drawTower();
+	glEndList();
+
 }
 
 
@@ -684,7 +841,14 @@ void display()
    glCallList(KING);  
 	glPopMatrix();   	
   
+	glPushMatrix();
     draw();
+	glPopMatrix();
+
+	glPushMatrix();
+	matrixTranslation(12.0f,0.0f,0.0);
+	glCallList(TOWER);
+	glPopMatrix(); 
  //  glCallList(BASE);  
 
    printf("To move the camera in y. Please press r or f key \n");
