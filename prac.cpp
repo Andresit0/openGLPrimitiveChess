@@ -143,19 +143,19 @@ void grid(void){
 for(int j=0;j<=100;j=j+2){
     for(int i=0;i<=100;i++){
         glBegin(GL_LINE_LOOP);
-        glColor3f(1.0f,0.0f,0.0f);              // Color Red    
-        glVertex3f( 1.0f+j, 1.0f+i, -10.0f);    // Top Right Of The Quad (Front)
-        glVertex3f(-1.0f+j, 1.0f+i, -10.0f);    // Top Left Of The Quad (Front)
-        glVertex3f(-1.0f+j,-1.0f+i, -10.0f);    // Bottom Left Of The Quad (Front)
-        glVertex3f( 1.0f+j,-1.0f+i, -10.0f);    // Bottom Right Of The Quad (Front)
+        glColor3f(1.0f,0.0f,0.0f);                 
+        glVertex3f( 1.0f+j, 1.0f+i, -10.0f);    
+        glVertex3f(-1.0f+j, 1.0f+i, -10.0f);    
+        glVertex3f(-1.0f+j,-1.0f+i, -10.0f);    
+        glVertex3f( 1.0f+j,-1.0f+i, -10.0f);   
         glEnd();
 
         glBegin(GL_LINE_LOOP);
-        glColor3f(1.0f,0.0f,0.0f);              // Color Red    
-        glVertex3f( 1.0f-j, 1.0f+i, -10.0f);    // Top Right Of The Quad (Front)
-        glVertex3f(-1.0f-j, 1.0f+i, -10.0f);    // Top Left Of The Quad (Front)
-        glVertex3f(-1.0f-j,-1.0f+i, -10.0f);    // Bottom Left Of The Quad (Front)
-        glVertex3f( 1.0f-j,-1.0f+i, -10.0f);    // Bottom Right Of The Quad (Front)
+        glColor3f(1.0f,0.0f,0.0f);                 
+        glVertex3f( 1.0f-j, 1.0f+i, -10.0f);    
+        glVertex3f(-1.0f-j, 1.0f+i, -10.0f);    
+        glVertex3f(-1.0f-j,-1.0f+i, -10.0f);   
+        glVertex3f( 1.0f-j,-1.0f+i, -10.0f);    
         glEnd();
     }
 }
@@ -163,50 +163,26 @@ for(int j=0;j<=100;j=j+2){
 for(int j=0;j<=100;j++){
     for(int i=0;i<=100;i++){
         glBegin(GL_LINE_LOOP);
-        glColor3f(1.0f+j,0.0f,0.0f);          // Color Red    
-        glVertex3f(0.0f+j,0.0f, -10.0f+i);    // Top Right Of The Quad (Bottom)
-        glVertex3f(-10.0f+j,0.0f, -10.0f+i);    // Top Left Of The Quad (Bottom)
-        glVertex3f(-10.0f+j,0.0f,-9.0f+i);    // Bottom Left Of The Quad (Bottom)
-        glVertex3f(0.0f+j,0.0f,-9.0f+i);    // Bottom Right Of The Quad (Bottom)
+        glColor3f(1.0f+j,0.0f,0.0f);              
+        glVertex3f(0.0f+j,0.0f, -10.0f+i);    
+        glVertex3f(-10.0f+j,0.0f, -10.0f+i);    
+        glVertex3f(-10.0f+j,0.0f,-9.0f+i);   
+        glVertex3f(0.0f+j,0.0f,-9.0f+i);    
         glEnd();
 
         glBegin(GL_LINE_LOOP);
-        glColor3f(1.0f+j,0.0f,0.0f);          // Color Red    
-        glVertex3f(0.0f-j,0.0f, -10.0f+i);    // Top Right Of The Quad (Bottom)
-        glVertex3f(-10.0f-j,0.0f, -10.0f+i);    // Top Left Of The Quad (Bottom)
-        glVertex3f(-10.0f-j,0.0f,-9.0f+i);    // Bottom Left Of The Quad (Bottom)
-        glVertex3f(0.0f-j,0.0f,-9.0f+i);    // Bottom Right Of The Quad (Bottom)
+        glColor3f(1.0f+j,0.0f,0.0f);             
+        glVertex3f(0.0f-j,0.0f, -10.0f+i);    
+        glVertex3f(-10.0f-j,0.0f, -10.0f+i);    
+        glVertex3f(-10.0f-j,0.0f,-9.0f+i);    
+        glVertex3f(0.0f-j,0.0f,-9.0f+i);    
         glEnd();
 
     }
 	}
 } 
 
-void draw() // TODO: Create a draw sphere function
-{
-
-glPushMatrix();
-glPushMatrix();
-glPushMatrix();
-glPushMatrix();
-glPushMatrix();
-glPushMatrix();
-glPushMatrix();
-glPushMatrix();
-glPushMatrix();
-glPushMatrix();
-
-
-
-
-glPopMatrix();
-
-//BISHOP
-
-
-
-
- glNewList(BISHOP,GL_COMPILE);
+void drawBishop(void){
 glColor3f(0.0f,0.0f,1.0f); 
 float translate=0.01;
 float angleBishop =0;
@@ -316,16 +292,9 @@ for(int i=0;i<=120;i++){
     glEnd();
     matrixTranslation(0.0f,0.0f,translate);
 }    
-glEndList();
+}
 
-
-
- glPopMatrix();
-
-
-//KNIGHT
-
-glNewList(KNIGHT,GL_COMPILE);
+void drawKnight(void){
 glCallList(BASE);
 float hKnight=1.1;
 float iKnight=1.1;
@@ -350,16 +319,11 @@ while(iK<=max){
 }
     matrixTranslation(0.0f,5.0f,0.0);
     glCallList(CIRCLE);
-glEndList();
-
-glPopMatrix();
+}
 
 
-
-//KING
-
-glNewList(QUEEN,GL_COMPILE);
- glCallList(BASE);
+void drawQueen(void){
+glCallList(BASE);
 float hKing = 1.0f;
 float iKing = 1.1;
 int iKng = 0;
@@ -435,22 +399,7 @@ while(iKng <= max){
     scale(0.5,0.5,0.5);
      matrixTranslation(0.0f,12.0,0.0);
     glCallList(CIRCLE);
-glEndList();
-
-glPopMatrix();        
-matrixTranslation(6.0f,0.0,0.0);  
-reflectionXY();      
- glCallList(BISHOP);
-
-glPopMatrix();  
-matrixTranslationQueenX();
- glCallList(QUEEN);
-
-glPopMatrix();
-matrixTranslation(-6.0f,0.0f,0.0);
-scalingXYZ();
- glCallList(KNIGHT);
-} 
+}
 
 
 void drawBase(void){
@@ -497,8 +446,6 @@ while(k<=max){
         f=f+0.09;
         glEnd();
     }
-
-
 // glColor3f(1.0,0.0,0.0);
 
 // Part cone upsidedown (like blocks)
@@ -519,7 +466,6 @@ while(k<=max){
     }
 
 // Part cone 
-
     for(int j=0;j<=25;j++){
         glBegin(GL_QUADS);
         h=h+0.005;
@@ -530,10 +476,8 @@ while(k<=max){
         g=g+0.01;          
         glEnd();
     }
-   
     
 // Top of the base
-
     glBegin(GL_QUADS);
     glColor3f(0.0f,0.0,1.0f);    
     glVertex3f( 0.0f,h,0.0f);    
@@ -565,7 +509,6 @@ while(k<=max){
         glVertex3f(1.3f, 0.25f, 1.5f);      
         glVertex3f(0.0f, 0.25f, 1.5f);              
     glEnd();
-	
 
     glBegin(GL_QUADS);
         glVertex3f(0.0f, 0.25f, 1.5f);    
@@ -573,7 +516,6 @@ while(k<=max){
         glVertex3f(1.0, 0.40f, 1.5f);      
         glVertex3f(0.0f, 0.40f, 1.5f);   
     glEnd();
-
 
     float f=1;
     for(int i=0;i<=5;i++){
@@ -585,7 +527,6 @@ while(k<=max){
         f=f+0.09;
         glEnd();
     }
-
 
 // glColor3f(1.0,0.0,0.0);
 
@@ -606,8 +547,6 @@ while(k<=max){
 
     }
 
-
-      
 // Top of the base
 
     glBegin(GL_QUADS);
@@ -654,15 +593,11 @@ float h = 0, g = 0;
 
 		g = g + 0.0006;
 	}
-	
-
 }
 
 
 
 void drawSphere(void){
-
-
     glColor3f(0.0f,0.0f,1.0f); 
      int nlatitud=200;
      int nlongitud=200;
@@ -674,8 +609,7 @@ void drawSphere(void){
      incf = PI / nlatitud;
      glBegin( GL_LINE_LOOP );
      for( i = 0; i < nlatitud; i++ )
-     {
-          
+     {          
           vertice[0] = vertice[1] = 0;
           vertice[2] =- radio;
           glVertex3fv( vertice );
@@ -694,10 +628,6 @@ void drawSphere(void){
           glVertex3fv( vertice );
      }
      glEnd();
-
-
-
-
 }
 
 
@@ -778,22 +708,25 @@ while(k<=max){
     glEnd();
     k=k+0.01;     
 }
-
 }
 
+void createList(void){
 
+    glNewList(BISHOP,GL_COMPILE);
+    drawBishop();
+    glEndList();
 
-/* Initialize OpenGL Graphics */
-void initGL() 
-{
-   glClearColor(0.58f, 0.58f, 0.58f,1.0f); // TODO: Set background (clear) color to gray
-	
-   // Create list to KING
-   glNewList(KING, GL_COMPILE);	
-	
-	drawKing();
+    glNewList(KNIGHT,GL_COMPILE);
+    drawKnight();
+    glEndList();
+
+    glNewList(QUEEN, GL_COMPILE);	
+	drawQueen();
 	glEndList();
 
+    glNewList(KING, GL_COMPILE);	
+	drawKing();
+	glEndList();
 
 	glNewList(BASE,GL_COMPILE);
 	drawBase();
@@ -817,10 +750,46 @@ void initGL()
 
 }
 
+void drawSixPieces(){
+   //KING
+	glPushMatrix();
+    matrixTranslation(-12.0f,0.0f,0.0);
+    glCallList(KING);  
+	glPopMatrix();   	
+  
+    //BISHOP
+	glPushMatrix();       
+    matrixTranslation(6.0f,0.0,0.0);  
+    reflectionXY();      
+    glCallList(BISHOP);
+    glPopMatrix();
 
+    //QUEEN
+    glPushMatrix(); 
+    matrixTranslationQueenX();
+    glCallList(QUEEN);
+    glPopMatrix();
 
+    //KNIGHT
+    glPushMatrix();
+    matrixTranslation(-6.0f,0.0f,0.0);
+    scalingXYZ();
+    glCallList(KNIGHT);
+    glPopMatrix();
 
+    //TOWER
+	glPushMatrix();
+	matrixTranslation(12.0f,0.0f,0.0);
+	glCallList(TOWER);
+	glPopMatrix(); 
+}
 
+/* Initialize OpenGL Graphics */
+void initGL() 
+{
+   glClearColor(0.58f, 0.58f, 0.58f,1.0f); // TODO: Set background (clear) color to gray
+   createList();	
+}
 
 /* Callback handler for window re-paint event */
 void display() 
@@ -835,25 +804,13 @@ void display()
    // Draw the grid  
    grid();
   
-   // Call list King
-	glPushMatrix();
-   matrixTranslation(-12.0f,0.0f,0.0);
-   glCallList(KING);  
-	glPopMatrix();   	
-  
-	glPushMatrix();
-    draw();
-	glPopMatrix();
+  // Draw pieces
+   drawSixPieces();
 
-	glPushMatrix();
-	matrixTranslation(12.0f,0.0f,0.0);
-	glCallList(TOWER);
-	glPopMatrix(); 
- //  glCallList(BASE);  
+    puts("To move the camera in y. Please press r or f key \n"
+   "To move the camera in x. Please press w or e key \n"
+   "To move the camera in z. Please press d or c key \n");
 
-   printf("To move the camera in y. Please press r or f key \n");
-	printf("To move the camera in x. Please press w or e key \n");
-	printf("To move the camera in z. Please press d or c key \n");
    glFlush ();                   //TODO: Render Object
 }
  
@@ -918,7 +875,6 @@ void mykey(unsigned char key, int x, int y)
     };
 
 
-
     // Move in the y negative direction
     if(key == 'F' | key == 'f'){
         btnY=btnY-1.0f;
@@ -945,15 +901,12 @@ void mykey(unsigned char key, int x, int y)
         btnZ=btnZ+1.0f;
     };   
 
-
-
-
     if(key == 's' ){
         scalingX=scalingX-0.1;
         scalingY=scalingY-0.1;
-        scalingZ=scalingZ-0.1;
-        
+        scalingZ=scalingZ-0.1;      
     };
+
     if(key == 'S'){
         scalingX=scalingX+0.1;
         scalingY=scalingY+0.1;
