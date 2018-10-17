@@ -35,6 +35,8 @@
 #define CROSS 9
 #define BASETOWER 10
 #define TOWER 11
+#define HEAD 12
+
 
 GLfloat btnX =0.0;
 GLfloat btnY =8.0;
@@ -43,12 +45,25 @@ GLfloat btnX2=0.0;
 GLfloat btnY2=1.0;
 GLfloat theta = 0;
 GLfloat beta = 0.0;
+GLfloat gama = 0.0;
+GLfloat sh = 0.0f;
 GLfloat transQueenX=0.0;
 int reflectionBishop=1;
 float max = 360.0;
 GLfloat scalingX=0.7;
 GLfloat scalingY=0.7;
 GLfloat scalingZ=0.7;
+GLfloat rookZ = 0.0;
+
+void shear()
+{
+  float m[]={
+     1.0,   0,  0.0, 0.0,
+     sh,  1.0,   0.0, 0.0,
+     0.0,   0.0,    1.0, 0.0,
+     0.0,   0.0,    0.0, 1.0};
+ glMultMatrixf(m);
+}
 
 void scalingXYZ()
 {
@@ -101,6 +116,16 @@ void matrixTranslation(float tx,float ty,float tz)
  glMultMatrixf(m);
 }
 
+void matrixTranslationZ()
+{
+  float m[]={
+     1.0,   0.0,   0.0,   0.0,
+     0.0,   1.0,   0.0,   0.0,
+     0.0,   0.0,   1.0,   0.0,
+     0.0,   0.0,   rookZ,   1.0};
+ glMultMatrixf(m);
+}
+
 void matrixRotationY()
 {
   float m[]={
@@ -110,6 +135,7 @@ void matrixRotationY()
      0.0,   0.0,   0.0,   1.0};
  glMultMatrixf(m);
 }
+
 
 void rotationScenaY()
 {
@@ -124,8 +150,8 @@ void rotationScenaY()
 void matrixRotationZ()
 {
   float m[]={
-     cos(theta),   sin(theta),   0.0,   0.0,
-     -sin(theta),   cos(theta),  0.0,   0.0,
+     cos(gama),   sin(gama),   0.0,   0.0,
+     -sin(gama),   cos(gama),  0.0,   0.0,
      0.0,   0.0,   1.0,   0.0,
      0.0,   0.0,   0.0,   1.0};
  glMultMatrixf(m);
@@ -541,7 +567,7 @@ void drawCross(void){
 
 float translate=0.01;
 float h = 0, g = 0;
-	for(int i=0;i<=1000;i++){
+	for(int i=0;i<=2000;i++){
 	// glColor3f((char) rand()%256, (char) rand()%256, (char) rand()%256);
 	glColor3f(0.0f,0.0f,1.0f);
     glBegin(GL_QUADS);
@@ -551,11 +577,11 @@ float h = 0, g = 0;
 	glVertex3f( 0.0f,h,0.5f); 
 	glEnd();
 
-		h = h + 0.0012;
+		h = h + 0.0006;
 	}
 
 	
-	for(int j=0;j<=1000;j++){
+	for(int j=0;j<=1200;j++){
 	
     glBegin(GL_POLYGON);
 
@@ -636,6 +662,88 @@ while(k<=max){
 }
 }
 
+
+void drawPawn(void){
+
+float k = 0.0f;
+float hPawn = 1.1f;
+
+glPushMatrix();
+scale(0.8, 0.8, 0.8);
+glCallList(BASE);
+glPopMatrix();
+
+glPushMatrix();
+matrixTranslation(0.0f,3.5f,0.0f);
+glCallList(HEAD);
+glPopMatrix();
+
+glPushMatrix();
+
+matrixTranslation(0.0f,5.8f,0.0f);
+scale(0.35, 0.35, 0.35);
+glCallList(CIRCLE);
+glPopMatrix();
+
+
+while(k<=max){
+
+    matrixRotationY();
+    theta = theta+0.001; 
+    glBegin(GL_LINE_LOOP);
+
+		glVertex3f(0.0f,hPawn + 2.5f, 0.0f);
+		glVertex3f(1.1f,hPawn + 2.5f, 0.0f);
+		glVertex3f(0.9f,hPawn + 2.5f, 0.0f);
+		glVertex3f(0.8f,hPawn + 2.5f, 0.0f);
+		glVertex3f(0.8f,hPawn + 2.3f, 0.0f);
+		glVertex3f(1.0f,hPawn + 2.3f, 0.0f);
+		glVertex3f(1.0f,hPawn + 2.1f, 0.0f);
+
+		glVertex3f(1.3f,hPawn + 2.1f, 0.0f);
+		glVertex3f(1.3f,hPawn + 1.9f, 0.0f);
+		
+		
+		glVertex3f(0.5f,hPawn + 1.9f, 0.0f);
+		glVertex3f(0.7f,hPawn + 0.3f, 0.0f);
+		glVertex3f(1.2f,hPawn + 0.0f, 0.0f);
+		glVertex3f(0.0f,hPawn + 0.0f, 0.0f);
+             
+    glEnd();
+    k=k+0.01;    
+ 
+}
+
+}
+
+
+void drawHeadPawn(void){
+float rx= 0.7, ry=2.1, rz= 0.7;
+float nlatitude = 10, nlongitude = 10;
+float varSlicesLatitude = PI/ (2*nlatitude);
+float varSlicesLongitude = (2*PI) / nlongitude;
+float vertex[3];
+for(int i =0; i<= nlatitude ; i++){
+		glColor3f(0.0f,0.0f,1.0f);
+		glBegin(GL_TRIANGLE_STRIP);
+	for(int j =0; j<= nlongitude ; j++){
+			vertex[0] = rx*cos((i+1)*varSlicesLatitude) * cos(j*varSlicesLongitude);
+			vertex[1] = ry*sin((i+1)*varSlicesLatitude);			
+			vertex[2] = rz*cos((i+1)*varSlicesLatitude) * sin(j*varSlicesLongitude);
+			
+			
+			glVertex3fv(vertex);
+			vertex[0] = rx*cos((i)*varSlicesLatitude) * cos(j*varSlicesLongitude);
+			vertex[1] = ry*sin((i)*varSlicesLatitude );			
+			vertex[2] = rz*cos((i)*varSlicesLatitude) * sin(j*varSlicesLongitude);
+			
+			glVertex3fv(vertex);
+		}
+		glEnd();
+}
+
+
+}
 
 
 void drawKing(void){
@@ -720,39 +828,85 @@ void createList(void){
 	drawTower();
 	glEndList();
 
+	glNewList(PAWN,GL_COMPILE);
+	drawPawn();
+	glEndList();
+
+	glNewList(HEAD, GL_COMPILE);
+	drawHeadPawn();
+	glEndList();
+
 }
+
+void DrawAxis(void){
+    glBegin(GL_LINE_STRIP);
+        glColor3f(1.0f, 0.0f, 0.0f);
+        glVertex3f(0.0, 0.0, 0.0);
+        glVertex3f(250.0, 0.0, 0.0); 
+        glColor3f(0.3f, 0.0f, 0.0f);
+        glVertex3f(-250.0, 0.0, 0.0);
+        glVertex3f(0.0, 0.0, 0.0);
+
+
+        glColor3f(0.0f, 1.0f, 0.0f);
+        glVertex3f(0.0, 250.0, 0.0);
+        glVertex3f(0.0, 0.0, 0.0);
+        glColor3f(0.0f, 0.3f, 0.0f);
+        glVertex3f(0.0, -250.0, 0.0);
+        glVertex3f(0.0, 0.0, 0.0);
+
+
+        glColor3f(0.0f, 0.0f, 1.0f);
+        glVertex3f(0.0, 0.0, 250.0);
+        glVertex3f(0.0, 0.0, 0.0);
+        glColor3f(0.0f, 0.0f, 0.3f);
+        glVertex3f(0.0, 0.0, -250.0);
+        glVertex3f(0.0, 0.0, 0.0);
+    glEnd();
+}
+
 
 void drawSixPieces(){
    //KING
 	glPushMatrix();
-    matrixTranslation(-12.0f,0.0f,0.0);
+    matrixTranslation(-9.0f,0.0f,0.0);
+	matrixRotationZ();
     glCallList(KING);  
 	glPopMatrix();   	
   
     //BISHOP
 	glPushMatrix();       
-    matrixTranslation(6.0f,0.0,0.0);  
+    matrixTranslation(4.0f,0.0,0.0);  
     reflectionXY();      
     glCallList(BISHOP);
     glPopMatrix();
 
     //QUEEN
     glPushMatrix(); 
+	 matrixTranslation(-1.0f,0.0f,0.0);
     matrixTranslationQueenX();
     glCallList(QUEEN);
     glPopMatrix();
 
     //KNIGHT
     glPushMatrix();
-    matrixTranslation(-6.0f,0.0f,0.0);
+    matrixTranslation(-5.0f,0.0f,0.0);
     scalingXYZ();
     glCallList(KNIGHT);
     glPopMatrix();
 
     //TOWER
 	glPushMatrix();
-	matrixTranslation(12.0f,0.0f,0.0);
+	matrixTranslation(8.0f,0.0f,0.0);
+	matrixTranslationZ();
 	glCallList(TOWER);
+	glPopMatrix(); 
+
+
+	glPushMatrix();
+	matrixTranslation(12.0f,0.0f,0.0);
+	shear();
+	glCallList(PAWN);
 	glPopMatrix(); 
 }
 
@@ -795,11 +949,15 @@ void display()
 
    rotationScenaY();
    
+	// Draw axi	
+	DrawAxis();
+
    // Draw the grid  
    grid();
   
   // Draw pieces
    drawSixPieces();
+
 
    glFlush ();                   //TODO: Render Object
 }
@@ -959,9 +1117,22 @@ void mykey(unsigned char key, int x, int y)
         
     };   
 
+	if(key == 't' | key == 'T'){
+		rookZ = rookZ + 1.0f;	
+	}
+
     if(key == 'd' | key == 'D'){
         theta=theta-0.1;
-    };          
+    }; 
+
+	if(key == 'k' | key == 'K'){
+		gama = gama - 0.05;
+	};  
+
+	if(key == 'P' | key == 'p'){
+		sh = sh + 0.1;
+	};       
+ 
     display();
 
 }
