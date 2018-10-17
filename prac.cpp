@@ -917,9 +917,9 @@ void printInformation(void){
     "To apply reflection at bishop. Please press b or B key \n"
     "To apply rotation at king. Please press k or K key \n"
     "To apply scaling  at knight. Please press n or N key \n"
-    "To apply shear at pawn. Please press s or S key \n"
+    "To apply shear at pawn. Please press p or P key \n"
     "To apply translation in X at queen. Please press q or Q key \n"
-    "To apply translation in Z at rook. Please press r or R key \n"
+    "To apply translation in Z at rook. Please press t or T key \n"
     "Press 5 to top view \n"
     "Press 2 to top front \n"
     "Press 8 to back view \n"
@@ -999,11 +999,7 @@ void reshape(GLsizei width, GLsizei height) {
  
 void mykey(unsigned char key, int x, int y)
 {
-	switch ( key )
-  {
-    case 27: // Escape key
-      exit (0);
-  }
+	
 
     //rotate all
 	if(key == '7'){
@@ -1064,7 +1060,9 @@ void mykey(unsigned char key, int x, int y)
         btnX2=0.0;
         btnY2=1.0;
     };
-    
+	display();
+    for(int k = 0 ; k < 4 ; k++){
+
     if(key == 'Q'){
         transQueenX=transQueenX+0.1;
     };
@@ -1132,8 +1130,10 @@ void mykey(unsigned char key, int x, int y)
 	if(key == 'P' | key == 'p'){
 		sh = sh + 0.1;
 	};       
- 
-    display();
+ 	
+	display();
+}
+  
 
 }
 
