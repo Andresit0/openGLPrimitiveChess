@@ -210,10 +210,13 @@ void drawBishop(void){
 glColor3f(0.0f,0.0f,1.0f); 
 float translate=0.01;
 float angleBishop =0;
-float translateHeadW=-3.6;
-float translateHeadH=0.0;
-float translateHeadZ=-1.0;
+float translateHeadW=-3.6; //Start position in X
+float translateHeadH=0.0;  //Start alture of figure
+float translateHeadZ=-1.0; //Start z postion of figure
 for(int i=0;i<=120;i++){
+
+    //Horne of horse
+
     glBegin(GL_POLYGON);
     glVertex3f(3.26f+translateHeadW,2.145f+translateHeadH,1.0f+translateHeadZ);
     glVertex3f(4.4f+translateHeadW,1.7f+translateHeadH,1.0f+translateHeadZ);
@@ -221,6 +224,9 @@ for(int i=0;i<=120;i++){
     glVertex3f(3.4f+translateHeadW,3.5f+translateHeadH,1.0f+translateHeadZ);
     glVertex3f(2.4f+translateHeadW,3.6f+translateHeadH,1.0f+translateHeadZ);
     glEnd();
+
+    //Superface of horse
+
     glBegin(GL_POLYGON);
     glVertex3f(2.0f+translateHeadW,0.0f+translateHeadH,1.0f+translateHeadZ);    
     glVertex3f(4.2f+translateHeadW,0.0f+translateHeadH,1.0f+translateHeadZ);
@@ -250,6 +256,8 @@ for(int i=0;i<=120;i++){
     glVertex3f(1.60f+translateHeadW,2.95f+translateHeadH,1.0f+translateHeadZ);
     glVertex3f(1.55f+translateHeadW,2.90f+translateHeadH,1.0f+translateHeadZ);
     glVertex3f(1.85f+translateHeadW,0.5f+translateHeadH,1.0f+translateHeadZ); 
+
+    //Hair of the horse
 
     glVertex3f(1.40f+translateHeadW,1.2f+translateHeadH,1.0f+translateHeadZ);
     glVertex3f(1.85f+translateHeadW,0.5f+translateHeadH,1.0f+translateHeadZ);
@@ -318,6 +326,7 @@ for(int i=0;i<=120;i++){
 }    
 }
 
+//
 void drawKnight(void){
 glCallList(BASE);
 float hKnight=1.1;
@@ -326,12 +335,16 @@ int iK=0;
 glColor3f(0.0f,0.0f,1.0f); 
 while(iK<=max){
     matrixRotationY();
+
+    //Principal Cone
     glBegin(GL_QUADS);
         glVertex3f(0.0f, hKnight+2.8, 0.0f);      
         glVertex3f(0.7, hKnight+2.8, 0.0f); 
         glVertex3f(0.7, hKnight, 1.0f);      
         glVertex3f(0.0f, hKnight, 1.0f);   
     glEnd();
+
+    //Ring
     glBegin(GL_QUADS);
         glVertex3f(0.0f, hKnight+2.8, 0.0f);      
         glVertex3f(0.7, hKnight+2.8, 0.0f); 
@@ -345,7 +358,7 @@ while(iK<=max){
     glCallList(CIRCLE);
 }
 
-
+//Queen draw
 void drawQueen(void){
 float hKing = 1.0f;
 float iKing = 1.1;
@@ -355,7 +368,7 @@ glCallList(BASE);
 while(iKng <= max){
     matrixRotationY();
 
-    //Down to Up
+    //Principal cone
     glBegin(GL_QUADS);
         glVertex3f(0.0f, hKing +5.8, 0.0f);      
         glVertex3f(0.5, hKing +5.8, 0.0f); 
@@ -363,6 +376,7 @@ while(iKng <= max){
         glVertex3f(0.0f, hKing, 0.1f);   
     glEnd();
 
+    //Down ring
     glBegin(GL_QUADS);
         glVertex3f(0.0f, hKing +3.9, 0.0f);      
         glVertex3f(0.7, hKing +3.9, 0.0f); 
@@ -370,6 +384,7 @@ while(iKng <= max){
         glVertex3f(0.0f, hKing +4.3, 0.8f);   
     glEnd();
 
+    //Midle ring
     glBegin(GL_QUADS);
         glVertex3f(0.0f, hKing +4.2, 0.0f);      
         glVertex3f(0.7, hKing +4.2, 0.0f); 
@@ -377,6 +392,7 @@ while(iKng <= max){
         glVertex3f(0.0f, hKing +3.9, 0.8f);   
     glEnd();
 
+    //App ring
    glBegin(GL_QUADS);
         glVertex3f(0.0f, hKing +3.2, 0.0f);      
         glVertex3f(1.3, hKing +3.2, 0.0f); 
@@ -384,6 +400,7 @@ while(iKng <= max){
         glVertex3f(0.0f, hKing +3.5, 0.0f);   
     glEnd();
 
+    //Up cone
     glBegin(GL_QUADS);
         glVertex3f(0.0f, hKing +5.8, 0.0f);      
         glVertex3f(1.2, hKing +5.8, 0.0f); 
@@ -394,6 +411,7 @@ while(iKng <= max){
     iKng++;
     theta=theta+0.001;  
 }
+   //Top sphere 
    matrixTranslation(0.0f,7.0,0.0);
     scale(0.5,0.5,0.5);
     glCallList(CIRCLE);
@@ -887,13 +905,15 @@ void drawSixPieces(){
     //BISHOP
 	glPushMatrix();       
     matrixTranslation(4.0f,0.0,0.0);  
+    //Reflection XY
     reflectionXY();      
     glCallList(BISHOP);
     glPopMatrix();
 
     //QUEEN
     glPushMatrix(); 
-	 matrixTranslation(-1.0f,0.0f,0.0);
+	matrixTranslation(-1.0f,0.0f,0.0);
+    //Translation in X
     matrixTranslationQueenX();
     glCallList(QUEEN);
     glPopMatrix();
@@ -901,6 +921,7 @@ void drawSixPieces(){
     //KNIGHT
     glPushMatrix();
     matrixTranslation(-5.0f,0.0f,0.0);
+    //Scaling in XYZ
     scalingXYZ();
     glCallList(KNIGHT);
     glPopMatrix();
@@ -922,6 +943,7 @@ void drawSixPieces(){
 	glPopMatrix(); 
 }
 
+//Keyboard  options
 void printInformation(void){
     puts("To move the camera in y. Please press r or f key \n"
     "To move the camera in x. Please press w or e key \n"
@@ -933,7 +955,7 @@ void printInformation(void){
     "To apply translation in X at queen. Please press q or Q key \n"
     "To apply translation in Z at rook. Please press t or T key \n"
     "Press 5 to top view \n"
-    "Press 2 to top front \n"
+    "Press 2 to front view\n"
     "Press 8 to back view \n"
     "Press 4 to left view \n"
     "Press 6 to right view \n"
@@ -964,15 +986,13 @@ void display()
 	// Scene rotation
    rotationScenaY();
    
-	
    // Draw the grid  
    grid();
   
   // Draw pieces
    drawSixPieces();
 
-
-   glFlush ();                   //TODO: Render Object
+   glFlush ();               
 }
  
 /* Call back when the windows is re-sized */
@@ -983,8 +1003,8 @@ void reshape(GLsizei width, GLsizei height) {
    glViewport(0, 0, width, height);  // Set the viewport to cover the new screen size
  
    // Set the aspectRatio ratio of the clipping area to match the viewport
-   glMatrixMode(GL_PROJECTION);  // TODO: To operate on the Projection matrix
-   glLoadIdentity();             // TODO: Reset the projection matrix
+   glMatrixMode(GL_PROJECTION);  // To operate on the Projection matrix
+   glLoadIdentity();             // Reset the projection matrix
    if (width >= height) {
       windowAreaXLeft   = -windowWidth * aspectRatio;
       windowAreaXRight  = windowWidth * aspectRatio;
