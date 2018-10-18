@@ -211,7 +211,7 @@ glColor3f(0.0f,0.0f,1.0f);
 float translate=0.01;
 float angleBishop =0;
 float translateHeadW=-3.6; //Start position in X
-float translateHeadH=0.0;  //Start alture of figure
+float translateHeadH=1.1;  //Start alture of figure
 float translateHeadZ=-1.0; //Start z postion of figure
 for(int i=0;i<=120;i++){
 
@@ -323,7 +323,9 @@ for(int i=0;i<=120;i++){
     glVertex3f(3.28f+translateHeadW,2.9f,1.0f);
     glEnd();
     matrixTranslation(0.0f,0.0f,translate);
-}    
+} 
+matrixTranslation(-0.5f,0.0f,-2.0);
+glCallList(BASE);  
 }
 
 //
@@ -430,7 +432,7 @@ while(k<=max){
     theta = theta+0.001; 
 
      glColor3f(0.0,0.0,1.0);
-//  glColor3ub( (char) rand()%256, (char) rand()%256, (char) rand()%256);
+
 // Bottom Part
     glBegin(GL_QUADS);
         glVertex3f(0.0f, 0.0f, 1.5f);      
@@ -438,15 +440,7 @@ while(k<=max){
         glVertex3f(1.3f, 0.25f, 1.5f);      
         glVertex3f(0.0f, 0.25f, 1.5f);              
     glEnd();
-/*
-	 glColor3f(1.0,0.0,0.0);
-    glBegin(GL_QUADS);
-        glVertex3f(0.0f, 0.0f, 1.5f);      
-        glVertex3f(1.3f, 0.0f, 1.5f); 
-        glVertex3f(1.3f, 0.25f, 1.5f);      
-        glVertex3f(0.0f, 0.25f, 1.5f);              
-    glEnd();
-*/
+
     glBegin(GL_QUADS);
         glVertex3f(0.0f, 0.25f, 1.5f);    
         glVertex3f(1.0, 0.25f, 1.5f); 
