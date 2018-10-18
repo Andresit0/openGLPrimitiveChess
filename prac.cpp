@@ -33,9 +33,8 @@
 #define PAWN 7
 #define ROOK 8
 #define CROSS 9
-#define BASETOWER 10
-#define TOWER 11
-#define HEAD 12
+#define BASEROOK 10
+#define HEAD 11
 
 
 GLfloat btnX =0.0;
@@ -46,7 +45,7 @@ GLfloat btnY2=1.0;
 GLfloat theta = 0;
 GLfloat beta = 0.0;
 GLfloat gama = 0.0;
-GLfloat sh = 0.0f;
+GLfloat shxy = 0.0f;
 GLfloat transQueenX=0.0;
 int reflectionBishop=1;
 float max = 360.0;
@@ -55,11 +54,12 @@ GLfloat scalingY=0.7;
 GLfloat scalingZ=0.7;
 GLfloat rookZ = 0.0;
 
+// Transformations
 void shear()
 {
   float m[]={
      1.0,   0,  0.0, 0.0,
-     sh,  1.0,   0.0, 0.0,
+     shxy,  1.0,   0.0, 0.0,
      0.0,   0.0,    1.0, 0.0,
      0.0,   0.0,    0.0, 1.0};
  glMultMatrixf(m);
@@ -491,7 +491,7 @@ while(k<=max){
 	}
 }
 
-
+// Function to draw the base rook
 void drawBaseTower(void){
 
 int newAngle=0;
@@ -562,7 +562,7 @@ while(k<=max){
 	}
 
 }
-
+// Function to draw the king cross
 void drawCross(void){
 
 float translate=0.01;
@@ -594,7 +594,7 @@ float h = 0, g = 0;
 		g = g + 0.0006;
 	}
 }
-
+// Function to draw the sphere
 void drawSphere(void){
     glColor3f(0.0f,0.0f,1.0f); 
      int nlatitud=200;
@@ -628,14 +628,14 @@ void drawSphere(void){
      glEnd();
 }
 
-
+// Function to draw the rook
 void drawTower(void){
 float k = 0.0f;
 float hTower = 1.3f;
 
 glPushMatrix();
 scale(0.9, 0.9, 0.9);
-glCallList(BASETOWER);
+glCallList(BASEROOK);
 glPopMatrix();
 
 while(k<=max){
@@ -662,7 +662,7 @@ while(k<=max){
 }
 }
 
-
+// Function to draw the pawn
 void drawPawn(void){
 
 float k = 0.0f;
@@ -717,6 +717,7 @@ while(k<=max){
 }
 
 
+// Function to draw the pawn head
 void drawHeadPawn(void){
 float rx= 0.7, ry=2.1, rz= 0.7;
 float nlatitude = 10, nlongitude = 10;
@@ -745,7 +746,7 @@ for(int i =0; i<= nlatitude ; i++){
 
 }
 
-
+// Function to draw the king
 void drawKing(void){
 
 glPushMatrix();
@@ -790,6 +791,7 @@ while(k<=max){
 }
 }
 
+// Create the list to all the six pieces
 void createList(void){
 
     glNewList(BISHOP,GL_COMPILE);
@@ -804,6 +806,7 @@ void createList(void){
 	drawQueen();
 	glEndList();
 
+	// King piece
     glNewList(KING, GL_COMPILE);	
 	drawKing();
 	glEndList();
@@ -812,26 +815,32 @@ void createList(void){
 	drawBase();
 	glEndList();
 
+	// Sphere to queen and pawn
 	glNewList(CIRCLE,GL_COMPILE);
 	drawSphere();
 	glEndList();
 
+	// King cross
 	glNewList(CROSS,GL_COMPILE);
 	drawCross();
 	glEndList();
 
-	glNewList(BASETOWER,GL_COMPILE);
+	// Base Rook
+	glNewList(BASEROOK,GL_COMPILE);
 	drawBaseTower();
 	glEndList();
 
-    glNewList(TOWER,GL_COMPILE);
+	// Rook piece
+    glNewList(ROOK,GL_COMPILE);
 	drawTower();
 	glEndList();
 
+	// Pawn piece
 	glNewList(PAWN,GL_COMPILE);
 	drawPawn();
 	glEndList();
 
+	// Head pawn
 	glNewList(HEAD, GL_COMPILE);
 	drawHeadPawn();
 	glEndList();
@@ -870,6 +879,7 @@ void drawSixPieces(){
    //KING
 	glPushMatrix();
     matrixTranslation(-9.0f,0.0f,0.0);
+   // Transformation used is rotation in Z
 	matrixRotationZ();
     glCallList(KING);  
 	glPopMatrix();   	
@@ -895,16 +905,18 @@ void drawSixPieces(){
     glCallList(KNIGHT);
     glPopMatrix();
 
-    //TOWER
+    //ROOK
 	glPushMatrix();
 	matrixTranslation(8.0f,0.0f,0.0);
+	// Transformation used is translation in Z
 	matrixTranslationZ();
-	glCallList(TOWER);
+	glCallList(ROOK);
 	glPopMatrix(); 
 
-
+	// PAWN
 	glPushMatrix();
 	matrixTranslation(12.0f,0.0f,0.0);
+	// Transformation used is shear x with respect to y
 	shear();
 	glCallList(PAWN);
 	glPopMatrix(); 
@@ -946,12 +958,13 @@ void display()
       
    gluLookAt(btnX,btnY,btnZ, 0.0,0.0,0.0, btnX2,btnY2,0.0);      //TODO: Define camera settings
    
-
-   rotationScenaY();
-   
-	// Draw axi	
+	// Draw axis	
 	DrawAxis();
 
+	// Scene rotation
+   rotationScenaY();
+   
+	
    // Draw the grid  
    grid();
   
@@ -983,10 +996,6 @@ void reshape(GLsizei width, GLsizei height) {
       windowAreaYBottom = -windowHeight / aspectRatio;
       windowAreaYTop    = windowHeight / aspectRatio;
    }
-   
-   //Adjust vision cone
-   //gluOrtho2D(windowAreaXLeft, windowAreaXRight, windowAreaYBottom, windowAreaYTop);
-   //glFrustum(0.0,10.0,0.0,10.0,5.0,500.0); 
    
    gluPerspective(90.0, GLfloat(width) / GLfloat(height), 0.5, 200.0); //   Define the shape of your viewing volume using glFrustum function 
     
@@ -1023,7 +1032,7 @@ void mykey(unsigned char key, int x, int y)
 
     //front view
 	if(key == '2'){
-        beta=0.0;
+        
         btnX =0.0;
         btnY =5.0;
         btnZ =30.0;
@@ -1033,7 +1042,7 @@ void mykey(unsigned char key, int x, int y)
 
     //back view
 	if(key == '8'){
-        beta=0.0;
+      
         btnX =0.0;
         btnY =5.0;
         btnZ =-30.0;
@@ -1043,7 +1052,7 @@ void mykey(unsigned char key, int x, int y)
 
     //left view
 	if(key == '4'){
-        beta=0.0;
+       
         btnX =-30.0;
         btnY =5.0;
         btnZ =0.0;
@@ -1115,20 +1124,19 @@ void mykey(unsigned char key, int x, int y)
         
     };   
 
+	// When the key t is pressed it is applied the transformation to the rook
 	if(key == 't' | key == 'T'){
 		rookZ = rookZ + 1.0f;	
 	}
 
-    if(key == 'd' | key == 'D'){
-        theta=theta-0.1;
-    }; 
-
+	// When the key k is pressed it is applied the transformation to the king
 	if(key == 'k' | key == 'K'){
 		gama = gama - 0.05;
 	};  
 
+	// When the key p is pressed it is applied the transformation to the pawn
 	if(key == 'P' | key == 'p'){
-		sh = sh + 0.1;
+		shxy = shxy + 0.1;
 	};       
  	
 	display();
