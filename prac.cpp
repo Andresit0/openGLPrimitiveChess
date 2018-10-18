@@ -328,7 +328,7 @@ matrixTranslation(-0.5f,0.0f,-2.0);
 glCallList(BASE);  
 }
 
-//
+//Knight draw
 void drawKnight(void){
 glCallList(BASE);
 float hKnight=1.1;
