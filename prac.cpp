@@ -35,6 +35,7 @@
 #define CROSS 9
 #define BASEROOK 10
 #define HEAD 11
+#define GRID 12
 
 
 GLfloat btnX =0.0;
@@ -105,7 +106,6 @@ void matrixTranslationQueenX()
  glMultMatrixf(m);
 }
 
-// Translation matrix with respect to x, y and z
 void matrixTranslation(float tx,float ty,float tz)
 {
   float m[]={
@@ -176,7 +176,7 @@ GLfloat windowXMax, windowXMin, windowYMax, windowYMin; // window bounds
 // Projection window/clipping/work area
 GLdouble windowAreaXLeft, windowAreaXRight, windowAreaYBottom, windowAreaYTop;
  
-
+//Chessboard
 void grid(void){
     
     for(int i=0;i<=7;i++){
@@ -206,6 +206,7 @@ void grid(void){
     }    
 } 
 
+//drawBishop draw
 void drawBishop(void){
 glColor3f(0.0f,0.0f,1.0f); 
 float translate=0.01;
@@ -806,14 +807,22 @@ while(k<=max){
 // Create the list to all the six pieces
 void createList(void){
 
+    //Grid piece
+    glNewList(GRID,GL_COMPILE);
+    grid();
+    glEndList();
+
+    // Bishop piece
     glNewList(BISHOP,GL_COMPILE);
     drawBishop();
     glEndList();
 
+    // Knight piece
     glNewList(KNIGHT,GL_COMPILE);
     drawKnight();
     glEndList();
 
+    // Queen List
     glNewList(QUEEN, GL_COMPILE);	
 	drawQueen();
 	glEndList();
@@ -823,6 +832,7 @@ void createList(void){
 	drawKing();
 	glEndList();
 
+    //Base List
 	glNewList(BASE,GL_COMPILE);
 	drawBase();
 	glEndList();
@@ -981,7 +991,7 @@ void display()
    rotationScenaY();
    
    // Draw the grid  
-   grid();
+   glCallList(GRID);;
   
   // Draw pieces
    drawSixPieces();
